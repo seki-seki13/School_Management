@@ -108,7 +108,7 @@ CONSTRAINT check_floor CHECK (floor BETWEEN 1 AND 5),
 CONSTRAINT check_capacity CHECK (capacity BETWEEN 1 AND 200)
 );
 
-CREATE TABLE Schedule ( 
+CREATE TABLE Schedule (
 schedule_id INT PRIMARY KEY AUTO_INCREMENT,
 teach_course_id INT NOT NULL,
 room_id INT,

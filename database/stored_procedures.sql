@@ -622,4 +622,57 @@ BEGIN
     WHERE reg_id = r_id;
 END //
 
+-- REPORTING
+
+CREATE PROCEDURE `r_students_per_course` ()
+BEGIN
+    SELECT
+        c.course_name,
+        COUNT(r.reg_id) AS total_students
+    FROM Registration r
+    JOIN Teaching t ON r.teach_course_id = t.teach_course_id
+    JOIN Courses c ON t.course_id = c.course_id
+    GROUP BY c.course_name
+    ORDER BY total_students DESC;
+END //
+
+
+CREATE PROCEDURE `r_average_grade_per_course` ()
+BEGIN
+    SELECT
+        c.course_name,
+        AVG(g.final_grade) AS average_grade
+    FROM Grades g
+    JOIN Registration r ON g.reg_id = r.reg_id
+    JOIN Teaching t ON r.teach_course_id = t.teach_course_id
+    JOIN Courses c ON t.course_id = c.course_id
+    GROUP BY c.course_name
+    ORDER BY average_grade DESC;
+END //
+
+
+CREATE PROCEDURE `r_attendance_summary` ()
+BEGIN
+    SELECT
+        c.course_name,
+        COUNT(*) AS total_records,
+
+        SUM(CASE WHEN a.status = 2 THEN 1 ELSE 0 END)
+        AS present_count,
+
+        ROUND(
+            (SUM(CASE WHEN a.status = 2 THEN 1 ELSE 0 END)
+            / COUNT(*)) * 100, 2
+
+        ) AS attendance_percentage
+
+    FROM Attendance a
+    JOIN Schedule s ON a.schedule_id = s.schedule_id
+    JOIN Teaching t ON s.teach_course_id = t.teach_course_id
+    JOIN Courses c ON t.course_id = c.course_id
+
+    GROUP BY c.course_name
+    ORDER BY attendance_percentage DESC;
+END //
+
 DELIMITER ;
