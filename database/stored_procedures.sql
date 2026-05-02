@@ -194,8 +194,8 @@ BEGIN
     JOIN Teachers t ON tch.teacher_id=t.teacher_id
     JOIN People p ON t.pers_id=p.pers_id
     JOIN Courses c ON tch.course_id=c.course_id
-    WHERE (p.last_name=entered_last_name OR entered_last_name = '')
-    AND (entered_first_name = '' OR p.first_name=entered_first_name);
+    WHERE (p.last_name=entered_last_name OR entered_last_name = NULL)
+    AND (entered_first_name = NULL OR p.first_name=entered_first_name);
 END //
 
 CREATE PROCEDURE `f_registration`
@@ -220,8 +220,8 @@ BEGIN
     JOIN Courses c ON tch.course_id=c.course_id
     JOIN Teachers t ON tch.teacher_id=t.teacher_id
     JOIN People pt ON t.pers_id=pt.pers_id -- people-teacher
-    WHERE (s.stud_id=entered_stud_id OR (entered_last_name = '' AND entered_first_name = ''))
-    AND (entered_stud_id='' OR (ps.last_name=entered_last_name AND ps.first_name=entered_first_name));
+    WHERE (s.stud_id=entered_stud_id OR (entered_last_name = NULL AND entered_first_name = NULL))
+    AND (entered_stud_id=NULL OR (ps.last_name=entered_last_name AND ps.first_name=entered_first_name));
 END //
 
 CREATE PROCEDURE `f_teacher_schedule`
@@ -328,7 +328,7 @@ BEGIN
     JOIN Teaching tch ON sch.teach_course_id=tch.teach_course_id
     JOIN Courses c ON tch.course_id=c.course_id
     WHERE s.stud_id=your_id
-    AND (c.course_name=entered_course OR entered_course='');
+    AND (c.course_name=entered_course OR entered_course=NULL);
 END //
 
 CREATE PROCEDURE `f_grades_teacher`
@@ -364,142 +364,262 @@ BEGIN
     JOIN Registration r ON gr.reg_id=r.reg_id
     JOIN Teaching tch ON r.teach_course_id=tch.teach_course_id
     JOIN Courses c ON tch.course_id=c.course_id
-    WHERE s.stud_id=your_id
-    AND (c.course_name=entered_course OR entered_course='')
+    WHERE r.stud_id=your_id
+    AND (c.course_name=entered_course OR entered_course=NULL)
     ORDER BY c.course_name ASC;
 END //
 
 -- ADDING
 
 CREATE PROCEDURE `add_student` (
-IN e_f_name VARCHAR(50),
-IN e_l_name VARCHAR(50),
+IN f_name VARCHAR(50),
+IN l_name VARCHAR(50),
 IN dob DATE,
-IN town VARCHAR(40),
-IN phone VARCHAR(12),
-IN email VARCHAR(100)
+IN e_town VARCHAR(40),
+IN e_address VARCHAR(50),
+IN e_phone VARCHAR(12),
+IN e_email VARCHAR(100)
 )
 BEGIN
     INSERT INTO People
     (first_name, last_name, DoB, town, address, phone, email)
-    values (e_f_name, e_l_name, dob, town, address, phone, email);
+    VALUES (f_name, l_name, dob, e_town, e_address, e_phone, e_email);
+
+    SET @new_id = LAST_INSERT_ID();
 
     INSERT INTO Students (pers_id)
-    values (new_id);
+    VALUES (@new_id);
 END //
 
 
-CREATE PROCEDURE `add_teacher` ()
+CREATE PROCEDURE `add_teacher` (
+IN f_name VARCHAR(50),
+IN l_name VARCHAR(50),
+IN dob DATE,
+IN e_town VARCHAR(40),
+IN e_address VARCHAR(50),
+IN e_phone VARCHAR(12),
+IN e_email VARCHAR(100)
+)
 BEGIN
+    INSERT INTO People
+    (first_name, last_name, DoB, town, address, phone, email)
+    VALUES (f_name, l_name, dob, e_town, e_address, e_phone, e_email);
 
+    SET @new_id = LAST_INSERT_ID();
+
+    INSERT INTO Teachers (pers_id)
+    VALUES (@new_id);
 END //
 
 
-CREATE PROCEDURE `add_administrator` ()
+CREATE PROCEDURE `add_admin` (
+IN f_name VARCHAR(50),
+IN l_name VARCHAR(50),
+IN dob DATE,
+IN e_town VARCHAR(40),
+IN e_address VARCHAR(50),
+IN e_phone VARCHAR(12),
+IN e_email VARCHAR(100)
+)
 BEGIN
+    INSERT INTO People
+    (first_name, last_name, DoB, town, address, phone, email)
+    VALUES (f_name, l_name, dob, e_town, e_address, e_phone, e_email);
 
+    SET @new_id = LAST_INSERT_ID();
+
+    INSERT INTO Administration (pers_id)
+    VALUES (@new_id);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_course` (
+IN c_id VARCHAR(15),
+IN c_name VARCHAR(50)
+)
 BEGIN
-
+    INSERT INTO Courses (course_id, course_name)
+    VALUES (c_id, c_name);
 END //
 
 
-CREATE PROCEDURE `name` ()
+CREATE PROCEDURE `add_teaching` (
+IN t_id INT,
+IN c_id VARCHAR(15)
+)
 BEGIN
-
+    INSERT INTO Teaching (teacher_id, course_id)
+    VALUES (t_id, c_id);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_registration` (
+IN s_id INT,
+IN tc_id INT
+)
 BEGIN
-
+    INSERT INTO Registration (stud_id, teach_course_id)
+    VALUES (s_id, tc_id);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_auth` (
+IN p_id INT,
+IN u_name VARCHAR(30),
+IN pass VARCHAR(255)
+)
 BEGIN
-
+    INSERT INTO Authentication (pers_id, username, password)
+    VALUES (p_id, u_name, pass);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_room_type` (
+IN t_name VARCHAR(30)
+)
 BEGIN
-
+    INSERT INTO Room_Types (type_name)
+    VALUES (t_name);
 END //
 
 
-CREATE PROCEDURE `name` ()
+CREATE PROCEDURE `add_room` (
+IN label VARCHAR(20),
+IN floor TINYINT,
+IN capacity TINYINT,
+IN type_id INT
+)
 BEGIN
-
+    INSERT INTO Rooms (room_label, floor, capacity, type_id)
+    VALUES (label, floor, capacity, type_id);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_schedule` (
+IN tc_id INT,
+IN room_id INT,
+IN class_date DATE
+)
 BEGIN
-
+    INSERT INTO Schedule (teach_course_id, room_id, date_class)
+    VALUES (tc_id, room_id, class_date);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_attendance` (
+IN sch_id INT,
+IN s_id INT,
+IN status TINYINT
+)
 BEGIN
-
+    INSERT INTO Attendance (schedule_id, stud_id, status)
+    VALUES (sch_id, s_id, status);
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `add_grade` (
+IN r_id INT,
+IN f_gr DECIMAL(6,2)
+)
 BEGIN
-
+    INSERT INTO Grades (reg_id, final_grade)
+    VALUES (r_id, f_gr);
 END //
 
 
-CREATE PROCEDURE `name` ()
+-- UPDATING
+
+CREATE PROCEDURE `update_person` (
+IN p_id INT,
+IN f_name VARCHAR(50),
+IN l_name VARCHAR(50),
+IN dob DATE,
+IN e_town VARCHAR(40),
+IN e_address VARCHAR(50),
+IN e_phone VARCHAR(12),
+IN e_email VARCHAR(100)
+)
 BEGIN
-
+    UPDATE People
+    SET first_name = f_name,
+        last_name = l_name,
+        DoB = dob,
+        town = e_town,
+        address = e_address,
+        phone = e_phone,
+        email = e_email
+    WHERE pers_id = p_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `update_course` (
+IN c_id VARCHAR(15),
+IN c_name VARCHAR(50)
+)
 BEGIN
-
+    UPDATE Courses
+    SET course_name = c_name
+    WHERE course_id = c_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `update_password` (
+IN p_id INT,
+IN new_pass VARCHAR(255)
+)
 BEGIN
-
+    UPDATE Authentication
+    SET password = new_pass
+    WHERE pers_id = p_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `update_grade` (
+IN r_id INT,
+IN grade DECIMAL(6,2)
+)
 BEGIN
-
+    UPDATE Grades
+    SET final_grade = grade
+    WHERE reg_id = r_id;
 END //
 
+-- DELETING
 
-CREATE PROCEDURE `name` ()
+CREATE PROCEDURE `delete_person` (
+IN p_id INT
+)
 BEGIN
-
+    DELETE FROM People
+    WHERE pers_id = p_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `delete_course` (
+IN c_id VARCHAR(15)
+)
 BEGIN
-
+    DELETE FROM Courses
+    WHERE course_id = c_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `delete_teaching` (
+IN tc_id INT
+)
 BEGIN
-
+    DELETE FROM Teaching
+    WHERE teach_course_id = tc_id;
 END //
 
 
-CREATE PROCEDURE `add_courses` ()
+CREATE PROCEDURE `delete_registration` (
+IN r_id INT
+)
 BEGIN
-
+    DELETE FROM Registration
+    WHERE reg_id = r_id;
 END //
 
-DELIMITER;
+DELIMITER ;
