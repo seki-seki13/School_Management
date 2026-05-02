@@ -675,4 +675,23 @@ BEGIN
     ORDER BY attendance_percentage DESC;
 END //
 
+-- USER ROLE
+
+CREATE PROCEDURE `get_user_role`
+(
+IN p_id INT
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM Administration WHERE pers_id=p_id) THEN
+        SELECT 'Admin' AS role;
+    ELSEIF EXISTS (SELECT 1 FROM Teachers WHERE pers_id=p_id) THEN
+        SELECT 'Teacher' AS role;
+    ELSEIF EXISTS (SELECT 1 FROM Students WHERE pers_id=p_id) THEN
+        SELECT 'Student' AS role;
+    ELSE
+        SELECT 'None' AS role;
+    END IF;
+
+END //
+
 DELIMITER ;
