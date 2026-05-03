@@ -31,6 +31,6 @@ class DatabaseConnection:
             self.connection.close()
             print('MySQL connection closed')
 
-# obj=DatabaseConnection()
+# obj = DatabaseConnection()
 # obj.connect()
 # obj.close_conn()

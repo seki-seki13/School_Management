@@ -677,6 +677,17 @@ END //
 
 -- USER ROLE
 
+CREATE PROCEDURE `get_auth_by_username`
+(IN e_username VARCHAR(30))
+BEGIN
+    SELECT
+        pers_id,
+        password
+    FROM Authentication
+    WHERE username = e_username;
+END //
+
+
 CREATE PROCEDURE `get_user_role`
 (
 IN p_id INT
