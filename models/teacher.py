@@ -5,3 +5,6 @@ class Teacher(Person):
         super().__init__(**kwargs)
         self.__teacher_id = teacher_id
 
+    @property
+    def teacher_id(self):
+        return self.__teacher_id

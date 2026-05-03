@@ -530,8 +530,8 @@ END //
 
 -- UPDATING
 
-CREATE PROCEDURE `update_person` (
-IN p_id INT,
+CREATE PROCEDURE `update_student` (
+IN s_id INT,
 IN f_name VARCHAR(50),
 IN l_name VARCHAR(50),
 IN dob DATE,
@@ -541,6 +541,35 @@ IN e_phone VARCHAR(12),
 IN e_email VARCHAR(100)
 )
 BEGIN
+    DECLARE p_id INT;
+    SELECT pers_id INTO p_id FROM Students
+    WHERE stud_id = s_id;
+    UPDATE People
+    SET first_name = f_name,
+        last_name = l_name,
+        DoB = dob,
+        town = e_town,
+        address = e_address,
+        phone = e_phone,
+        email = e_email
+    WHERE pers_id = p_id;
+END //
+
+
+CREATE PROCEDURE `update_teacher` (
+IN t_id INT,
+IN f_name VARCHAR(50),
+IN l_name VARCHAR(50),
+IN dob DATE,
+IN e_town VARCHAR(40),
+IN e_address VARCHAR(50),
+IN e_phone VARCHAR(12),
+IN e_email VARCHAR(100)
+)
+BEGIN
+    DECLARE p_id INT;
+    SELECT pers_id INTO p_id FROM Teachers
+    WHERE teacher_id = t_id;
     UPDATE People
     SET first_name = f_name,
         last_name = l_name,
@@ -587,10 +616,25 @@ END //
 
 -- DELETING
 
-CREATE PROCEDURE `delete_person` (
-IN p_id INT
+CREATE PROCEDURE `delete_student` (
+IN s_id INT
 )
 BEGIN
+    SET @p_id = (
+    SELECT pers_id FROM Students
+    WHERE stud_id = s_id);
+    DELETE FROM People
+    WHERE pers_id = p_id;
+END //
+
+
+CREATE PROCEDURE `delete_teacher` (
+IN t_id INT
+)
+BEGIN
+    SET @p_id = (
+    SELECT pers_id FROM Teachers
+    WHERE teacher_id = t_id);
     DELETE FROM People
     WHERE pers_id = p_id;
 END //

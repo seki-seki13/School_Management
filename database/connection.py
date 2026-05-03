@@ -1,3 +1,4 @@
+from functools import wraps
 import mysql.connector
 from mysql.connector import Error
 
@@ -30,6 +31,30 @@ class DatabaseConnection:
         if self.connection and self.connection.is_connected():
             self.connection.close()
             print('MySQL connection closed')
+
+def transaction(dictionary=True):
+    def decorator(func):
+        @wraps
+        def wrapper(self, *args, **kwargs):
+            conn = self.database_manager.connect()
+            if not conn:
+                return None
+            cursor = conn.cursor(dictionary=dictionary)
+            try:
+                result = func(self, cursor, conn, *args, **kwargs)
+                conn.commit()
+                print(f'Operation: [{func.__name__} successful.]')
+                return result
+            except Error as e:
+                conn.rollback()
+                print(f'Database transaction error: {e}')
+                return None
+            finally:
+                cursor.close()
+                self.database_manager.close_conn()
+        return wrapper
+    return decorator
+
 
 # obj = DatabaseConnection()
 # obj.connect()

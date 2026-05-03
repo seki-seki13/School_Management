@@ -5,3 +5,6 @@ class Administration(Person):
         super().__init__(**kwargs)
         self.__admin_id = admin_id
 
+    @property
+    def admin_id(self):
+        return self.__admin_id

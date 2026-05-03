@@ -24,6 +24,18 @@ class Person:
         return self.__l_name
 
     @property
+    def dob(self):
+        return self.__dob
+
+    @property
+    def town(self):
+        return self.__town
+
+    @property
+    def address(self):
+        return self.__address
+
+    @property
     def phone(self):
         return self.__phone
 
