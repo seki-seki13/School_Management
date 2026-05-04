@@ -7,7 +7,7 @@ class RoomType:
 class Room(RoomType):
     def __init__(
             self, room_id, room_label, floor, capacity, type_id, type_name):
-        super().__init__(type_id, type_name)
+        super().__init__(type_id=type_id, type_name=type_name)
 
         self.room_id = room_id
         self.room_label = room_label

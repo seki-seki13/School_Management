@@ -60,6 +60,7 @@ END //
 CREATE PROCEDURE `v_rooms` ()
 BEGIN
     SELECT
+        rt.type_id,
         r.room_id,
         r.room_label,
         r.floor,
@@ -67,6 +68,15 @@ BEGIN
         rt.type_name AS type
     FROM Rooms r
     JOIN Room_Types rt ON r.type_id=rt.type_id;
+END //
+
+
+CREATE PROCEDURE `v_room_types` ()
+BEGIN
+    SELECT
+        type_id,
+        type_name
+    FROM Room_Types;
 END //
 
 

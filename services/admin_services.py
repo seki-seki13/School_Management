@@ -1,7 +1,7 @@
 from models.admin import Administration
 from database.connection import DatabaseConnection, transaction
 
-class Admin_service:
+class AdminService:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
