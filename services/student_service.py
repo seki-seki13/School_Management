@@ -1,8 +1,5 @@
 from database.connection import DatabaseConnection, transaction
-from models.person import Person
 from models.student import Student
-from mysql.connector import Error
-
 
 class StudentService:
     def __init__(self):
@@ -17,6 +14,7 @@ class StudentService:
             for row in rows:
                 stud = Student(
                     stud_id=row['stud_id'],
+                    pers_id=row['pers_id'],
                     f_name=row['first_name'],
                     l_name=row['last_name'],
                     dob=row['DoB'],

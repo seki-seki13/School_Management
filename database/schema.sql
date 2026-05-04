@@ -1,5 +1,11 @@
-CREATE database School_Management_System;
+-- 1. Create the database (if it doesn't exist)
+CREATE DATABASE IF NOT EXISTS School_Management_System;
+
+-- 2. Switch to it
 USE School_Management_System;
+
+-- 3. Verify it is empty or exists
+SHOW TABLES;
 
 -- Base Tables --
 

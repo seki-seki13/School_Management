@@ -4,6 +4,7 @@ DELIMITER //
 CREATE PROCEDURE `v_students` ()
 BEGIN
     SELECT
+        p.pers_id,
         s.stud_id,
         p.first_name,
         p.last_name,
@@ -19,6 +20,7 @@ END //
 CREATE PROCEDURE `v_teachers` ()
 BEGIN
     SELECT
+        p.pers_id
         t.teacher_id,
         p.first_name,
         p.last_name,
@@ -35,6 +37,7 @@ END //
 CREATE PROCEDURE `v_admins` ()
 BEGIN
     SELECT
+        p.pers_id
         a.admin_id,
         p.first_name,
         p.last_name,
@@ -624,7 +627,7 @@ BEGIN
     SELECT pers_id FROM Students
     WHERE stud_id = s_id);
     DELETE FROM People
-    WHERE pers_id = p_id;
+    WHERE pers_id = @p_id;
 END //
 
 
@@ -636,7 +639,7 @@ BEGIN
     SELECT pers_id FROM Teachers
     WHERE teacher_id = t_id);
     DELETE FROM People
-    WHERE pers_id = p_id;
+    WHERE pers_id = @p_id;
 END //
 
 

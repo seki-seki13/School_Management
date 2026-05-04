@@ -7,7 +7,7 @@ class DatabaseConnection:
         self.__host = "localhost"
         self.__user = "Alina_Kopbayeva_CS5_16872239"
         self.__password = "C0ventryCUC"
-        self.__database = "School_Management_Database"
+        self.__database = "School_Management_System"
 
         self.connection = None
 
@@ -34,7 +34,7 @@ class DatabaseConnection:
 
 def transaction(dictionary=True):
     def decorator(func):
-        @wraps
+        @wraps(func)
         def wrapper(self, *args, **kwargs):
             conn = self.database_manager.connect()
             if not conn:
