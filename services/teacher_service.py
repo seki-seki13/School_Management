@@ -30,7 +30,8 @@ class TeacherService:
     def add_teacher(
             self, cursor, conn, f_name, l_name,
             dob, e_town, e_address, e_phone, e_email):
-        new_teacher = (f_name, l_name, dob, e_town, e_address, e_phone, e_email)
+        new_teacher = (f_name, l_name, dob, e_town,
+                       e_address, e_phone, e_email)
         cursor.callproc('add_teacher', new_teacher)
 
     @transaction(dictionary=False)
