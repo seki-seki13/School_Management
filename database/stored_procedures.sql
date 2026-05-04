@@ -606,6 +606,32 @@ BEGIN
 END //
 
 
+CREATE PROCEDURE `update_teaching` (
+    IN tc_id INT,
+    IN new_t_id INT,
+    IN new_c_id VARCHAR(15)
+)
+BEGIN
+    UPDATE Teaching
+    SET teacher_id = new_t_id,
+        course_id = new_c_id
+    WHERE teach_course_id = tc_id;
+END //
+
+
+CREATE PROCEDURE `update_registration` (
+    IN r_id INT,
+    IN new_s_id INT,
+    IN new_tc_id INT
+)
+BEGIN
+    UPDATE Registration
+    SET stud_id = new_s_id,
+        teach_course_id = new_tc_id
+    WHERE reg_id = r_id;
+END //
+
+
 CREATE PROCEDURE `update_password` (
 IN p_id INT,
 IN new_pass VARCHAR(255)

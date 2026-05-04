@@ -28,5 +28,10 @@ class TeachingService:
         cursor.callproc('add_teaching', new_teaching)
 
     @transaction(dictionary=False)
+    def update_teaching(self, cursor, conn, tch_id, t_id, c_id):
+        updated = (tch_id, t_id, c_id)
+        cursor.callproc('update_teaching', updated)
+
+    @transaction(dictionary=False)
     def delete_teaching(self, cursor, conn, tc_id):
         cursor.callproc('delete_teaching', (tc_id,))
