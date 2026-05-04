@@ -3,6 +3,9 @@ from services.teacher_service import TeacherService
 from services.admin_services import AdminService
 from services.room_service import RoomService
 from services.course_service import CoursesService
+from services.teaching_service import TeachingService
+
+
 
 # def test_stud_service():
 #     service = StudentService()
@@ -25,11 +28,11 @@ from services.course_service import CoursesService
 #
 # def test_teacher_service():
 #     t_serv= TeacherService()
-
-    # print('1. addition')
-    # t_serv.add_teacher('dokja', 'kim', '1991-02-15',
-    #                    'Seul', 'street 456', '+71234567890',
-    #                    'demonkingofsalvation@gmail.com')
+#
+#     print('1. addition')
+#     t_serv.add_teacher('Donna', 'Abbott', '1985-06-06',
+#                        'Astana', '60 Church Road', '+71234567899',
+#                        'DAbbott04@gmail.com')
 
     # print('\n2. viewing')
     # t_serv.view_all_teachers()
@@ -91,10 +94,23 @@ from services.course_service import CoursesService
     # print('\n4. delete')
     # c_serv.delete_course('000000')
 
-if __name__ == '__main__':
+def test_teaching_serv():
+    tch_serv = TeachingService()
+
+    print('1.add')
+    tch_serv.add_teaching(2, '001ALG')
+
+    print('\n2. view')
+    tch_serv.view_teaching_records()
+
+    # print('\n3. delete')
+    # tch_serv.delete_teaching(1)
+
+if __name__ == '__tests__':
     pass
     # test_stud_service()
     # test_teacher_service()
     # test_admin_serv()
     # test_room_serv()
     # test_course_serv()
+    test_teaching_serv()
