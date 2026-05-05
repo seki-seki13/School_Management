@@ -39,3 +39,8 @@ class AuthService:
         else:
             print('\n[!] Invalid username or password.')
             return None
+
+    @transaction(dictionary=False)
+    def new_password(self, cursor, conn, e_username, new_pass):
+        new_password = (e_username, new_pass)
+        cursor.callproc('update_password', new_password)

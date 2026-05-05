@@ -119,7 +119,7 @@ BEGIN
     SELECT
         sch.schedule_id,
         p.first_name AS teacher_first_name,
-        p.last_name AS teacher_last_name,
+        p.last_name AS,
         c.course_name,
         r.room_label,
         r.floor,
@@ -633,13 +633,13 @@ END //
 
 
 CREATE PROCEDURE `update_password` (
-IN p_id INT,
+IN e_username INT,
 IN new_pass VARCHAR(255)
 )
 BEGIN
     UPDATE Authentication
     SET password = new_pass
-    WHERE pers_id = p_id;
+    WHERE username = e_username;
 END //
 
 
