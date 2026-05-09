@@ -14,7 +14,7 @@ BEGIN
         p.phone,
         p.email
     FROM Students s
-    JOIN People p ON s.pers_id=p.pers_id;
+    JOIN People p ON s.pers_id = p.pers_id;
 END //
 
 CREATE PROCEDURE `v_teachers` ()
@@ -30,7 +30,7 @@ BEGIN
         p.phone,
         p.email
     FROM Teachers t
-    JOIN People p ON t.pers_id=p.pers_id;
+    JOIN People p ON t.pers_id = p.pers_id;
 END //
 
 
@@ -47,7 +47,7 @@ BEGIN
         p.phone,
         p.email
     FROM Administration a
-    JOIN People p ON a.pers_id=p.pers_id;
+    JOIN People p ON a.pers_id = p.pers_id;
 END //
 
 
@@ -67,7 +67,7 @@ BEGIN
         r.capacity,
         rt.type_name AS type
     FROM Rooms r
-    JOIN Room_Types rt ON r.type_id=rt.type_id;
+    JOIN Room_Types rt ON r.type_id = rt.type_id;
 END //
 
 
@@ -88,9 +88,9 @@ BEGIN
         p.last_name,
         c.course_name
     FROM Teaching tch
-    JOIN Teachers t ON tch.teacher_id=t.teacher_id
-    JOIN People p ON t.pers_id=p.pers_id
-    JOIN Courses c ON tch.course_id=c.course_id;
+    JOIN Teachers t ON tch.teacher_id = t.teacher_id
+    JOIN People p ON t.pers_id = p.pers_id
+    JOIN Courses c ON tch.course_id = c.course_id;
 END //
 
 
@@ -105,12 +105,12 @@ BEGIN
         c.course_name,
         r.reg_date as date_registered
     FROM Registration r
-    JOIN Students s ON r.stud_id=s.stud_id
-    JOIN People ps ON s.pers_id=ps.pers_id -- people-student
-    JOIN Teaching tch ON r.teach_course_id=tch.teach_course_id
-    JOIN Courses c ON tch.course_id=c.course_id
-    JOIN Teachers t ON tch.teacher_id=t.teacher_id
-    JOIN People pt ON t.pers_id=pt.pers_id; -- people-teacher
+    JOIN Students s ON r.stud_id = s.stud_id
+    JOIN People ps ON s.pers_id = ps.pers_id -- people-student
+    JOIN Teaching tch ON r.teach_course_id = tch.teach_course_id
+    JOIN Courses c ON tch.course_id = c.course_id
+    JOIN Teachers t ON tch.teacher_id = t.teacher_id
+    JOIN People pt ON t.pers_id = pt.pers_id; -- people-teacher
 END //
 
 
@@ -127,12 +127,12 @@ BEGIN
         rt.type_name AS room_type,
         sch.date_class
     FROM Schedule sch
-    JOIN Teaching tch ON sch.teach_course_id=tch.teach_course_id
-    JOIN Teachers t ON tch.teacher_id=t.teacher_id
-    JOIN People p ON t.pers_id=p.pers_id
-    JOIN Courses c ON tch.course_id=c.course_id
-    JOIN Rooms r ON sch.room_id=r.room_id
-    JOIN Room_Types rt ON r.type_id=rt.type_id;
+    JOIN Teaching tch ON sch.teach_course_id = tch.teach_course_id
+    JOIN Teachers t ON tch.teacher_id = t.teacher_id
+    JOIN People p ON t.pers_id = p.pers_id
+    JOIN Courses c ON tch.course_id = c.course_id
+    JOIN Rooms r ON sch.room_id = r.room_id
+    JOIN Room_Types rt ON r.type_id = rt.type_id;
 END //
 
 
@@ -149,11 +149,11 @@ BEGIN
             WHEN att.status = 2 THEN 'Present'
         END AS attendance_status
     FROM Attendance att
-    JOIN Students s ON att.stud_id=s.stud_id
-    JOIN People p ON s.pers_id=p.pers_id
-    JOIN Schedule sch ON att.schedule_id=sch.schedule_id
-    JOIN Teaching tch ON sch.teach_course_id=tch.teach_course_id
-    JOIN Courses c ON tch.course_id=c.course_id;
+    JOIN Students s ON att.stud_id = s.stud_id
+    JOIN People p ON s.pers_id = p.pers_id
+    JOIN Schedule sch ON att.schedule_id = sch.schedule_id
+    JOIN Teaching tch ON sch.teach_course_id = tch.teach_course_id
+    JOIN Courses c ON tch.course_id = c.course_id;
 END //
 
 CREATE PROCEDURE `v_grades` ()
@@ -164,11 +164,11 @@ BEGIN
         c.course_name,
         gr.final_grade
     FROM Grades gr
-    JOIN Registration r ON gr.reg_id=r.reg_id
-    JOIN Students s ON r.stud_id=s.stud_id
-    JOIN People p ON s.pers_id=p.pers_id
-    JOIN Teaching tch ON r.teach_course_id=tch.teach_course_id
-    JOIN Courses c ON tch.course_id=c.course_id;
+    JOIN Registration r ON gr.reg_id = r.reg_id
+    JOIN Students s ON r.stud_id = s.stud_id
+    JOIN People p ON s.pers_id = p.pers_id
+    JOIN Teaching tch ON r.teach_course_id = tch.teach_course_id
+    JOIN Courses c ON tch.course_id = c.course_id;
 END //
 
 
@@ -202,7 +202,7 @@ BEGIN
         c.course_name
     FROM Teaching tch
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
-    JOIN Courses c ON tch.course_id=c.course_id
+    JOIN Courses c ON tch.course_id = c.course_id
     WHERE t.pers_id = your_pers_id;
 END //
 
@@ -249,8 +249,7 @@ BEGIN
     JOIN Rooms r ON sch.room_id = r.room_id
     JOIN Room_Types rt ON r.type_id = rt.type_id
     WHERE t.pers_id = your_pers_id
-    AND (sch.date_class = entered_date OR entered_date IS NULL)
-    ORDER BY sch.date_class ASC;
+    AND (sch.date_class = entered_date OR entered_date IS NULL);
 END //
 
 CREATE PROCEDURE `f_stud_schedule`
@@ -278,8 +277,7 @@ BEGIN
     JOIN Registration reg ON tch.teach_course_id = reg.teach_course_id
     JOIN Students s ON reg.stud_id = s.stud_id
     WHERE s.pers_id = your_pers_id
-    AND (sch.date_class = entered_date OR entered_date IS NULL)
-    ORDER BY sch.date_class ASC;
+    AND (sch.date_class = entered_date OR entered_date IS NULL);
 END //
 
 CREATE PROCEDURE `f_attendance_for_teacher`

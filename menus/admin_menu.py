@@ -1,6 +1,5 @@
-
 from services.teacher_service import TeacherService
-from utilities.display import DisplayUtils
+from utilities.displaying import DisplayUtils
 
 
 class TeacherMenu:
