@@ -14,10 +14,10 @@ class GradesService:
                 gr = Grade(
                     grade_id=None,
                     reg_id=None,
+                    final_grade=row['final_grade'],
                     student_first_name=row['student_first_name'],
                     student_last_name=row['student_last_name'],
-                    course_name=row['course_name'],
-                    final_grade=row['final_grade']
+                    course_name=row['course_name']
                 )
                 grades.append(gr)
         return grades

@@ -42,20 +42,3 @@ class Person:
     @property
     def email(self):
         return self.__email
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

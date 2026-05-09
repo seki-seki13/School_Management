@@ -5,10 +5,10 @@ class Registration:
         self.__stud_id = stud_id
         self.__teach_course_id = teach_course_id
         self.__reg_date = reg_date
-        self.__st_name = (f"{kwargs.get('student_first_name','')}"
-                          f"{kwargs.get('student_last_name','')}")
-        self.__teacher_name = (f"{kwargs.get('teacher_first_name', '')}"
-                          f"{kwargs.get('teacher_last_name', '')}")
+        self.__st_name = (f"{kwargs.get('student_first_name', '')} "
+                          f"{kwargs.get('student_last_name', '')}").strip()
+        self.__teacher_name = (f"{kwargs.get('teacher_first_name', '')} "
+                               f"{kwargs.get('teacher_last_name', '')}").strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
 
     @property

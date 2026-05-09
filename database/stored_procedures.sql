@@ -20,7 +20,7 @@ END //
 CREATE PROCEDURE `v_teachers` ()
 BEGIN
     SELECT
-        p.pers_id
+        p.pers_id,
         t.teacher_id,
         p.first_name,
         p.last_name,
@@ -37,7 +37,7 @@ END //
 CREATE PROCEDURE `v_admins` ()
 BEGIN
     SELECT
-        p.pers_id
+        p.pers_id,
         a.admin_id,
         p.first_name,
         p.last_name,
@@ -119,7 +119,7 @@ BEGIN
     SELECT
         sch.schedule_id,
         p.first_name AS teacher_first_name,
-        p.last_name AS,
+        p.last_name AS teacher_last_name,
         c.course_name,
         r.room_label,
         r.floor,
@@ -259,7 +259,7 @@ BEGIN
     JOIN Courses c ON tch.course_id=c.course_id
     JOIN Rooms r ON sch.room_id=r.room_id
     JOIN Room_Types rt ON r.type_id=rt.type_id
-    WHERE t.teacher_id=your_id
+    WHERE t.pers_id=your_id
     AND (sch.date_class = entered_date OR entered_date is null)
     ORDER BY sch.date_class ASC;
 END //
@@ -287,7 +287,8 @@ BEGIN
     JOIN Rooms r ON sch.room_id=r.room_id
     JOIN Room_Types rt ON r.type_id=rt.type_id
     JOIN Registration reg ON tch.teach_course_id=reg.teach_course_id
-    WHERE reg.stud_id=your_id
+    JOIN Students s ON reg.stud_id = s.stud_id
+    WHERE s.pers_id=your_id
     AND (sch.date_class = entered_date OR entered_date is null)
     ORDER BY sch.date_class ASC;
 END //
@@ -633,7 +634,7 @@ END //
 
 
 CREATE PROCEDURE `update_password` (
-IN e_username INT,
+IN e_username VARCHAR(30),
 IN new_pass VARCHAR(255)
 )
 BEGIN

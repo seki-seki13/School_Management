@@ -6,7 +6,7 @@ class Teaching:
         self.__course_id = course_id
 
         # display attributes. later used in rich table display
-        self.__teacher_name = (f"{kwargs.get('first_name', '')}"
+        self.__teacher_name = (f"{kwargs.get('first_name', '')} "
                                f"{kwargs.get('last_name')}").strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
 

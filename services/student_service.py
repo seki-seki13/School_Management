@@ -45,4 +45,3 @@ class StudentService:
     @transaction(dictionary=True)
     def delete_student(self, cursor, conn, s_id):
         cursor.callproc('delete_student', (s_id,))
-

@@ -5,7 +5,7 @@ class Schedule:
         self.__date_class = date_class
 
         self.__teacher_name = (f"{kwargs.get('teacher_first_name', '')} "
-                               f"{kwargs.get('teacher_last_name', '')}")
+                               f"{kwargs.get('teacher_last_name', '')}").strip()
         self.__course_name = kwargs.get('course_name', '')
         self.__room_label = kwargs.get('room_label', '')
         self.__floor = kwargs.get('floor', '')

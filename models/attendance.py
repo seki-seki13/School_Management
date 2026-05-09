@@ -8,7 +8,7 @@ class Attendance:
         self.__course_name = kwargs.get('course_name', 'None')
         self.__date_class = kwargs.get('date_class', '')
         self.__student_name = (f"{kwargs.get('student_first_name', '')} "
-                             f"{kwargs.get('student_last_name', '')}")
+                             f"{kwargs.get('student_last_name', '')}").strip()
         self.__teacher_id = kwargs.get('teacher_id', '')
 
     @property

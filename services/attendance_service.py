@@ -13,12 +13,13 @@ class AttendanceService:
             for row in result.fetchall():
                 att = Attendance(
                     attendance_id=None,
+                    schedule_id=None,
                     stud_id=None,
+                    attendance_status=row['attendance_status'],
                     course_name=row['course_name'],
                     date_class=row['date_class'],
                     student_first_name=row['student_first_name'],
                     student_last_name=row['student_last_name'],
-                    attendance_status=row['attendance_status'],
                     teacher_id=None
                 )
                 attendance_records.append(att)

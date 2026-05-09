@@ -5,8 +5,8 @@ class Grade:
         self.__final_grade = final_grade
 
         self.__student_name = (f"{kwargs.get('student_first_name', '')} "
-                               f"{kwargs.get('student_last_name', '')}")
-        self.__course_name = kwargs.get('course_name', 'None')
+                               f"{kwargs.get('student_last_name', '')}").strip()
+        self.__course_name = kwargs.get('course_name', 'Unknown')
 
     @property
     def grade_id(self):
