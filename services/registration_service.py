@@ -1,10 +1,12 @@
 from models.registration import Registration
-from database.connection import DatabaseConnection, transaction
+from database.connection import DatabaseConnection
+from utilities.decorators import transaction, sorted_by
 
 class RegistrationService:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
+    @sorted_by('reg_date')
     @transaction(dictionary=True)
     def view_registration(self, cursor, conn):
         cursor.callproc('v_registration')
@@ -24,6 +26,26 @@ class RegistrationService:
                 )
                 registration_records.append(reg)
         return registration_records
+
+    @transaction(dictionary=True)
+    def find_registration_by_student(self, cursor, conn, stud_id):
+        cursor.callproc('f_registration', (stud_id,))
+        records = []
+        for result in cursor.stored_results():
+            for row in result.fetchall():
+                reg = Registration(
+                    reg_id=row['registration_ID'],
+                    stud_id=None,
+                    teach_course_id=None,
+                    student_first_name=row['student_first_name'],
+                    student_last_name=row['student_last_name'],
+                    teacher_first_name=row['teacher_first_name'],
+                    teacher_last_name=row['teacher_last_name'],
+                    course_name=row['course_name'],
+                    reg_date=row['date_registered']
+                )
+                records.append(reg)
+        return records
 
     @transaction(dictionary=False)
     def add_registration(self, cursor, conn, s_id, tc_id):

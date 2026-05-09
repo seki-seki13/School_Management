@@ -5,7 +5,6 @@ Handles displaying reports, tables, messages
 
 from tabulate import tabulate
 
-
 class DisplayUtils:
     """Utility class for displaying data in table format"""
 
@@ -13,14 +12,9 @@ class DisplayUtils:
     def print_table(title, data, columns):
         """
         Generic method to display ANY list of objects as a table.
-
-        Args:
-            title: Title of the table
-            data: List of objects to display
-            columns: List of tuples: (display_name, attribute_name)
         """
         if not data:
-            print(f"\n[!] No records found\n")
+            print(f"\n[!] No records found for {title}\n")
             return
 
         print(f"\n{'=' * 100}")
@@ -34,13 +28,14 @@ class DisplayUtils:
             row = []
             for _, attr_name in columns:
                 try:
+                    # getattr looks for the @property names you defined in your models
                     value = getattr(item, attr_name, "N/A")
                 except Exception:
                     value = "N/A"
-                row.append(str(value) if value else "N/A")
+                row.append(str(value) if value is not None else "N/A")
             rows.append(row)
 
-        print(tabulate(rows, headers=headers, tablefmt="grid"))
+        print(tabulate(rows, headers=headers, tablefmt="fancy_grid"))
         print()
 
     @staticmethod
@@ -51,11 +46,11 @@ class DisplayUtils:
             students,
             [
                 ("Student ID", "student_id"),
-                ("Person ID", "pers_id"),
                 ("First Name", "first_name"),
                 ("Last Name", "last_name"),
                 ("DOB", "dob"),
                 ("Town", "town"),
+                ("Address", "address"),
                 ("Phone", "phone"),
                 ("Email", "email")
             ]
@@ -69,11 +64,11 @@ class DisplayUtils:
             teachers,
             [
                 ("Teacher ID", "teacher_id"),
-                ("Person ID", "pers_id"),
                 ("First Name", "first_name"),
                 ("Last Name", "last_name"),
                 ("DOB", "dob"),
                 ("Town", "town"),
+                ("Address", "address"),
                 ("Phone", "phone"),
                 ("Email", "email")
             ]
@@ -81,17 +76,17 @@ class DisplayUtils:
 
     @staticmethod
     def print_admins(admins):
-        """Display admins table"""
+        """Display teachers table"""
         DisplayUtils.print_table(
             "ADMINS LIST",
             admins,
             [
                 ("Admin ID", "admin_id"),
-                ("Person ID", "pers_id"),
                 ("First Name", "first_name"),
                 ("Last Name", "last_name"),
                 ("DOB", "dob"),
                 ("Town", "town"),
+                ("Address", "address"),
                 ("Phone", "phone"),
                 ("Email", "email")
             ]
@@ -117,23 +112,35 @@ class DisplayUtils:
             registrations,
             [
                 ("Reg ID", "reg_id"),
-                ("Student Name", "st_name"),
-                ("Teacher Name", "teacher_name"),
+                ("Student", "st_name"),
+                ("Teacher", "teacher_name"),
                 ("Course", "course_name"),
-                ("Reg Date", "reg_date")
+                ("Date", "reg_date")
             ]
         )
 
     @staticmethod
     def print_teaching(teaching_records):
-        """Display teaching assignments table"""
+        """Display teaching assignments (Teacher + Course)"""
         DisplayUtils.print_table(
             "TEACHING ASSIGNMENTS",
             teaching_records,
             [
-                ("Teaching ID", "tc_id"),
+                ("ID", "tc_id"),
                 ("Teacher", "t_name"),
-                ("Course", "c_id")
+                ("Course", "c_id") # Returns course_name from your property
+            ]
+        )
+
+    @staticmethod
+    def print_rooms_types(rooms):
+        """Display rooms table"""
+        DisplayUtils.print_table(
+            "ROOM TYPES LIST",
+            rooms,
+            [
+                ("Type ID", "type_id"),
+                ("Type", "type_name")
             ]
         )
 
@@ -145,7 +152,7 @@ class DisplayUtils:
             rooms,
             [
                 ("Room ID", "room_id"),
-                ("Room Label", "room_label"),
+                ("Label", "room_label"),
                 ("Floor", "floor"),
                 ("Capacity", "capacity"),
                 ("Type", "type_name")
@@ -154,17 +161,15 @@ class DisplayUtils:
 
     @staticmethod
     def print_schedule(schedule_list):
-        """Display schedule table"""
+        """Display schedule table (Updated with schedule_id)"""
         DisplayUtils.print_table(
             "CLASS SCHEDULE",
             schedule_list,
             [
-                ("Schedule ID", "teach_course_id"),
-                ("Teacher", "teacher_name"),
+                ("ID", "schedule_id"),
                 ("Course", "course_name"),
+                ("Teacher", "teacher_name"),
                 ("Room", "room_label"),
-                ("Floor", "floor"),
-                ("Capacity", "capacity"),
                 ("Type", "type_name"),
                 ("Date", "date_class")
             ]
@@ -173,149 +178,67 @@ class DisplayUtils:
     @staticmethod
     def print_attendance(attendance_list):
         """Display attendance table"""
-        if not attendance_list:
-            print(f"\n[!] No attendance records found\n")
-            return
-
-        print(f"\n{'=' * 80}")
-        print(f"  ATTENDANCE RECORDS")
-        print(f"{'=' * 80}\n")
-
-        rows = []
-        for att in attendance_list:
-            rows.append([
-                att.course_name,
-                str(att.date_class),
-                att.student_name,
-                att.attendance_status
-            ])
-
-        print(tabulate(
-            rows,
-            headers=["Course", "Date", "Student", "Status"],
-            tablefmt="grid"
-        ))
-        print()
+        DisplayUtils.print_table(
+            "ATTENDANCE RECORDS",
+            attendance_list,
+            [
+                ("Student", "student_name"),
+                ("Course", "course_name"),
+                ("Date", "date_class"),
+                ("Status", "attendance_status")
+            ]
+        )
 
     @staticmethod
     def print_grades(grades_list):
         """Display grades table"""
-        if not grades_list:
-            print(f"\n[!] No grades found\n")
-            return
-
-        print(f"\n{'=' * 80}")
-        print(f"  GRADES")
-        print(f"{'=' * 80}\n")
-
-        rows = []
-        for grade in grades_list:
-            rows.append([
-                grade.student_name,
-                grade.course_name,
-                grade.final_grade
-            ])
-
-        print(tabulate(
-            rows,
-            headers=["Student", "Course", "Grade"],
-            tablefmt="grid"
-        ))
-        print()
+        DisplayUtils.print_table(
+            "GRADES",
+            grades_list,
+            [
+                ("Student", "student_name"),
+                ("Course", "course_name"),
+                ("Final Grade", "final_grade")
+            ]
+        )
 
     # ============ REPORT DISPLAYING ============
 
     @staticmethod
     def print_students_per_course(report_dict):
-        """
-        Display students per course report.
-
-        Args:
-            report_dict: Dictionary from ReportingUtils.students_per_course()
-        """
         if not report_dict:
             print("\n[!] No data to display\n")
             return
-
-        print(f"\n{'=' * 60}")
-        print(f"  STUDENTS PER COURSE")
-        print(f"{'=' * 60}\n")
-
         rows = [[course, count] for course, count in report_dict.items()]
         print(tabulate(rows, headers=["Course Name", "Total Students"], tablefmt="grid"))
-        print()
 
     @staticmethod
     def print_average_grades(report_dict):
-        """
-        Display average grades per course report.
-
-        Args:
-            report_dict: Dictionary from ReportingUtils.average_grade_per_course()
-        """
         if not report_dict:
             print("\n[!] No data to display\n")
             return
-
-        print(f"\n{'=' * 60}")
-        print(f"  AVERAGE GRADE PER COURSE")
-        print(f"{'=' * 60}\n")
-
-        rows = [[course, f"{grade:.2f}"] for course, grade in report_dict.items()]
+        rows = [[course, f"{grade:.2f}" if grade else "N/A"] for course, grade in report_dict.items()]
         print(tabulate(rows, headers=["Course Name", "Average Grade"], tablefmt="grid"))
-        print()
 
     @staticmethod
     def print_attendance_summary(report_dict):
-        """
-        Display attendance summary report.
-
-        Args:
-            report_dict: Dictionary from ReportingUtils.attendance_summary()
-        """
         if not report_dict:
             print("\n[!] No data to display\n")
             return
-
-        print(f"\n{'=' * 80}")
-        print(f"  ATTENDANCE SUMMARY")
-        print(f"{'=' * 80}\n")
-
-        rows = [
-            [
-                course,
-                stats['total'],
-                stats['present'],
-                f"{stats['attendance_percentage']}%"
-            ]
-            for course, stats in report_dict.items()
-        ]
-
-        print(tabulate(
-            rows,
-            headers=["Course", "Total Records", "Present", "Attendance %"],
-            tablefmt="grid"
-        ))
-        print()
+        rows = [[c, s['total'], s['present'], f"{s['attendance_percentage']}%"]
+                for c, s in report_dict.items()]
+        print(tabulate(rows, headers=["Course", "Records", "Present", "%"], tablefmt="grid"))
 
     # ============ MESSAGE METHODS ============
 
     @staticmethod
     def print_success(message):
-        """Print success message"""
-        print(f"\n✓ SUCCESS: {message}\n")
+        print(f"\n[bold green]✓ SUCCESS:[/bold green] {message}\n")
 
     @staticmethod
     def print_error(message):
-        """Print error message"""
-        print(f"\n✗ ERROR: {message}\n")
-
-    @staticmethod
-    def print_warning(message):
-        """Print warning message"""
-        print(f"\n⚠ WARNING: {message}\n")
+        print(f"\n[bold red]✗ ERROR:[/bold red] {message}\n")
 
     @staticmethod
     def print_info(message):
-        """Print info message"""
-        print(f"\nℹ INFO: {message}\n")
+        print(f"\n[bold cyan]ℹ INFO:[/bold cyan] {message}\n")

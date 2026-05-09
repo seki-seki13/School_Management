@@ -1,10 +1,12 @@
-from database.connection import DatabaseConnection, transaction
 from models.course import Course
+from database.connection import DatabaseConnection
+from utilities.decorators import transaction, sorted_by
 
 class CoursesService:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
+    @sorted_by('course_id')
     @transaction(dictionary=True)
     def view_courses(self, cursor, conn):
         cursor.callproc('v_courses')

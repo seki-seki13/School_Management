@@ -1,5 +1,6 @@
 class Schedule:
-    def __init__(self, teach_course_id, room_id, date_class, **kwargs):
+    def __init__(self, schedule_id, teach_course_id, room_id, date_class, **kwargs):
+        self.__schedule_id = schedule_id
         self.__teach_course_id = teach_course_id
         self.__room_id = room_id
         self.__date_class = date_class
@@ -11,6 +12,10 @@ class Schedule:
         self.__floor = kwargs.get('floor', '')
         self.__capacity = kwargs.get('capacity', '')
         self.__type_name = kwargs.get('room_type', '')
+
+    @property
+    def schedule_id(self):
+        return self.__schedule_id
 
     @property
     def teach_course_id(self):

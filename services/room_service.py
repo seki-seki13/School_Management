@@ -1,11 +1,12 @@
 from models.room import Room, RoomType
-from database.connection import DatabaseConnection, transaction
+from database.connection import DatabaseConnection
+from utilities.decorators import transaction, sorted_by
 
 class RoomService:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
-
+    @sorted_by('type_name')
     @transaction(dictionary=True)
     def v_room_types(self, cursor, conn):
         cursor.callproc('v_room_types')
@@ -19,6 +20,7 @@ class RoomService:
                 room_types.append(r_type)
         return room_types
 
+    @sorted_by('room_label')
     @transaction(dictionary=True)
     def view_rooms(self, cursor, conn):
         cursor.callproc('v_rooms')

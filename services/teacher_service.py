@@ -1,10 +1,12 @@
 from models.teacher import Teacher
-from database.connection import DatabaseConnection, transaction
+from database.connection import DatabaseConnection
+from utilities.decorators import transaction, sorted_by
 
 class TeacherService:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
+    @sorted_by('last_name')
     @transaction(dictionary=True)
     def view_all_teachers(self, cursor, conn):
         cursor.callproc('v_teachers')

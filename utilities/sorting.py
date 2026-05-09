@@ -50,29 +50,3 @@ class SortUtils:
             return merge(left, right)
 
         return merge_sort_recursive(data_copy)
-
-    # ============ CONVENIENCE METHODS ============
-
-    @staticmethod
-    def sort_students_by_last_name(students, reverse=False):
-        return SortUtils.merge_sort(students, key=lambda s: s.last_name, reverse=reverse)
-
-    @staticmethod
-    def sort_students_by_first_name(students, reverse=False):
-        return SortUtils.merge_sort(students, key=lambda s: s.first_name, reverse=reverse)
-
-    @staticmethod
-    def sort_teachers_by_last_name(teachers, reverse=False):
-        return SortUtils.merge_sort(teachers, key=lambda t: t.last_name, reverse=reverse)
-
-    @staticmethod
-    def sort_teachers_by_first_name(teachers, reverse=False):
-        return SortUtils.merge_sort(teachers, key=lambda t: t.first_name, reverse=reverse)
-
-    @staticmethod
-    def sort_courses_by_name(courses, reverse=False):
-        return SortUtils.merge_sort(courses, key=lambda c: c.course_name, reverse=reverse)
-
-    @staticmethod
-    def sort_by_date(data, key=None, reverse=True):
-        return SortUtils.merge_sort(data, key=key, reverse=reverse)
