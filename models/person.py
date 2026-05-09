@@ -16,6 +16,10 @@ class Person:
         self.__email = email
 
     @property
+    def pers_id(self):
+        return self.__pers_id
+
+    @property
     def first_name(self):
         return self.__f_name
 

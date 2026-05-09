@@ -12,7 +12,7 @@ class Authentication:
         self.__role=role
 
     @property
-    def person_id(self):
+    def pers_id(self):
         return self.__pers_id
 
     @property

@@ -1,6 +1,5 @@
 from database.connection import DatabaseConnection, transaction
 from models.authentication import Authentication
-from mysql.connector import Error
 
 class AuthService:
     def __init__(self):
