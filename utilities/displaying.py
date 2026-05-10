@@ -39,6 +39,21 @@ class DisplayUtils:
         print()
 
     @staticmethod
+    def print_user_profile(profile):
+        DisplayUtils.print_table(
+            'PROFILE INFORMATION',
+            profile,
+            [
+                ("First Name", "first_name"),
+                ("Last Name", "last_name"),
+                ("DOB", "birth_date"),
+                ("Town", "town"),
+                ("Address", "address"),
+                ("Phone", "phone"),
+                ("Email", "email")
+            ])
+
+    @staticmethod
     def print_students(students):
         """Display students table"""
         DisplayUtils.print_table(

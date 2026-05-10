@@ -13,3 +13,28 @@ class Course:
     @property
     def course_name(self):
         return self.__course_id
+
+class CourseReport(Course):
+    def __init__(self, course_id, course_name, **kwargs):
+        super().__init__(course_id=None, course_name=course_name)
+
+        self.__total_students = kwargs.get('total_students')
+        self.__average_grade = kwargs.get('average_grade')
+        self.__total_records = kwargs.get('total_records')
+        self.__attendance_percentage = kwargs.get('attendance_percentage')
+
+    @property
+    def total_students(self):
+        return self.__total_students
+
+    @property
+    def average_grade(self):
+        return self.__average_grade
+
+    @property
+    def total_records(self):
+        return self.__total_records
+
+    @property
+    def attendance_percentage(self):
+        return self.__attendance_percentage

@@ -13,7 +13,7 @@ def transaction(dictionary=True):
             try:
                 result = func(self, cursor, conn, *args, **kwargs)
                 conn.commit()
-                print(f'Operation: [{func.__name__} successful.]')
+                # print(f'Operation: [{func.__name__} successful.]')
                 return result
             except Error as e:
                 conn.rollback()

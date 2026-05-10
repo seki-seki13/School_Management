@@ -37,7 +37,7 @@ class AuthService:
             )
 
         else:
-            print('\n[!] Invalid username or password.')
+            print('\n[!] Invalid username or password. [!]')
             return None
 
     @transaction(dictionary=False)

@@ -1,10 +1,13 @@
 """
 Reporting Utility - Generates reports directly from database
-Uses stored procedures: r_students_per_course, r_average_grade_per_course, r_attendance_summary
+Uses stored procedures: r_students_per_course,
+r_average_grade_per_course, r_attendance_summary
 Returns data only - no displaying
 """
 
-from database.connection import DatabaseConnection, transaction
+from database.connection import DatabaseConnection
+from utilities.decorators import transaction
+from models.course import CourseReport
 
 
 class ReportingUtils:
@@ -23,13 +26,16 @@ class ReportingUtils:
             Dictionary {course_name: total_students}
         """
         cursor.callproc('r_students_per_course')
-        report = {}
+        report = []
 
         for result in cursor.stored_results():
-            rows = result.fetchall()
-            for row in rows:
-                report[row['course_name']] = row['total_students']
-
+            for row in result.fetchall():
+                rep = CourseReport(
+                    course_id=None,
+                    course_name=row['course_name'],
+                    total_students=row['total_students']
+                )
+                report.append(rep)
         return report
 
     @transaction(dictionary=True)
@@ -42,13 +48,16 @@ class ReportingUtils:
             Dictionary {course_name: average_grade}
         """
         cursor.callproc('r_average_grade_per_course')
-        report = {}
+        report = []
 
         for result in cursor.stored_results():
-            rows = result.fetchall()
-            for row in rows:
-                report[row['course_name']] = row['average_grade']
-
+            for row in result.fetchall():
+                rep = CourseReport(
+                    course_id=None,
+                    course_name=row['course_name'],
+                    average_grade=row['average_grade']
+                )
+                report.append(rep)
         return report
 
     @transaction(dictionary=True)
@@ -61,15 +70,16 @@ class ReportingUtils:
             Dictionary with course attendance statistics
         """
         cursor.callproc('r_attendance_summary')
-        report = {}
+        report = []
 
         for result in cursor.stored_results():
-            rows = result.fetchall()
-            for row in rows:
-                report[row['course_name']] = {
-                    'total': row['total_records'],
-                    'present': row['present_count'],
-                    'attendance_percentage': row['attendance_percentage']
-                }
-
+            for row in result.fetchall():
+                rep = CourseReport(
+                    course_id=None,
+                    course_name=row['course_name'],
+                    total_records=row['total_records'],
+                    attendance_percentage=
+                    row['attendance_percentage']
+                )
+                report.append(rep)
         return report
