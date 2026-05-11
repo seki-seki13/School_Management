@@ -50,12 +50,12 @@ def run_stud_menu(session):
                 elif action == 2:
                     data = grade_serv.get_grades_by_role(
                         session.role, session.pers_id)
-                    disp.print_grades(data)
+                    disp.print_grades_for_student(data)
 
                 elif action == 3:
                     data = attendance_serv.get_attendance_by_role(
                         session.role, session.pers_id)
-                    disp.print_attendance(data)
+                    disp.print_attendance_for_student(data)
 
                 elif action == 4:
                     data = student_serv.view_all_students()

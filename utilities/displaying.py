@@ -1,25 +1,15 @@
-"""
-Display Utility - Formats and displays data using tabulate
-Handles displaying reports, tables, messages
-"""
-
 from tabulate import tabulate
 
 class DisplayUtils:
-    """Utility class for displaying data in table format"""
-
     @staticmethod
     def print_table(title, data, columns):
-        """
-        Generic method to display ANY list of objects as a table.
-        """
         if not data:
-            print(f"\n[!] No records found for {title}\n")
+            print(f'\n[!] No records found for {title}\n')
             return
 
-        print(f"\n{'=' * 100}")
-        print(f"  {title}")
-        print(f"{'=' * 100}\n")
+        print(f'\n{"=" * 100}\n'
+              f'{title}\n'
+              f'{"=" * 100}')
 
         rows = []
         headers = [col[0] for col in columns]
@@ -28,14 +18,13 @@ class DisplayUtils:
             row = []
             for _, attr_name in columns:
                 try:
-                    # getattr looks for the @property names you defined in your models
-                    value = getattr(item, attr_name, "N/A")
+                    value = getattr(item, attr_name, 'N/A')
                 except Exception:
                     value = "N/A"
-                row.append(str(value) if value is not None else "N/A")
+                row.append(str(value) if value is not None else 'N/A')
             rows.append(row)
 
-        print(tabulate(rows, headers=headers, tablefmt="fancy_grid"))
+        print(tabulate(rows, headers=headers, tablefmt='fancy_grid'))
         print()
 
     @staticmethod
@@ -44,30 +33,30 @@ class DisplayUtils:
             'PROFILE INFORMATION',
             profile,
             [
-                ("First Name", "first_name"),
-                ("Last Name", "last_name"),
-                ("DOB", "birth_date"),
-                ("Town", "town"),
-                ("Address", "address"),
-                ("Phone", "phone"),
-                ("Email", "email")
+                ('First Name', 'first_name'),
+                ('Last Name', 'last_name'),
+                ('DOB', 'birth_date'),
+                ('Town', 'town'),
+                ('Address', 'address'),
+                ('Phone', 'phone'),
+                ('Email', 'email')
             ])
 
     @staticmethod
     def print_students(students):
         """Display students table"""
         DisplayUtils.print_table(
-            "STUDENTS LIST",
+            'STUDENTS LIST',
             students,
             [
-                ("Student ID", "student_id"),
-                ("First Name", "first_name"),
-                ("Last Name", "last_name"),
-                ("DOB", "dob"),
-                ("Town", "town"),
-                ("Address", "address"),
-                ("Phone", "phone"),
-                ("Email", "email")
+                ('Student ID', 'student_id'),
+                ('First Name', 'first_name'),
+                ('Last Name', 'last_name'),
+                ('DOB', 'dob'),
+                ('Town', 'town'),
+                ('Address', 'address'),
+                ('Phone', 'phone'),
+                ('Email', 'email')
             ]
         )
 
@@ -75,17 +64,17 @@ class DisplayUtils:
     def print_teachers(teachers):
         """Display teachers table"""
         DisplayUtils.print_table(
-            "TEACHERS LIST",
+            'TEACHERS LIST',
             teachers,
             [
-                ("Teacher ID", "teacher_id"),
-                ("First Name", "first_name"),
-                ("Last Name", "last_name"),
-                ("DOB", "dob"),
-                ("Town", "town"),
-                ("Address", "address"),
-                ("Phone", "phone"),
-                ("Email", "email")
+                ('Teacher ID', 'teacher_id'),
+                ('First Name', 'first_name'),
+                ('Last Name', 'last_name'),
+                ('DOB', 'dob'),
+                ('Town', 'town'),
+                ('Address', 'address'),
+                ('Phone', 'phone'),
+                ('Email', 'email')
             ]
         )
 
@@ -93,17 +82,17 @@ class DisplayUtils:
     def print_admins(admins):
         """Display teachers table"""
         DisplayUtils.print_table(
-            "ADMINS LIST",
+            'ADMINS LIST',
             admins,
             [
-                ("Admin ID", "admin_id"),
-                ("First Name", "first_name"),
-                ("Last Name", "last_name"),
-                ("DOB", "dob"),
-                ("Town", "town"),
-                ("Address", "address"),
-                ("Phone", "phone"),
-                ("Email", "email")
+                ('Admin ID', 'admin_id'),
+                ('First Name', 'first_name'),
+                ('Last Name', 'last_name'),
+                ('DOB', 'dob'),
+                ('Town', 'town'),
+                ('Address', 'address'),
+                ('Phone', 'phone'),
+                ('Email', 'email')
             ]
         )
 
@@ -111,11 +100,11 @@ class DisplayUtils:
     def print_courses(courses):
         """Display courses table"""
         DisplayUtils.print_table(
-            "COURSES LIST",
+            'COURSES LIST',
             courses,
             [
-                ("Course ID", "course_id"),
-                ("Course Name", "course_name")
+                ('Course ID', 'course_id'),
+                ('Course name', 'course_name')
             ]
         )
 
@@ -123,14 +112,14 @@ class DisplayUtils:
     def print_registrations(registrations):
         """Display registrations table"""
         DisplayUtils.print_table(
-            "REGISTRATIONS LIST",
+            'REGISTRATIONS LIST',
             registrations,
             [
-                ("Reg ID", "reg_id"),
-                ("Student", "st_name"),
-                ("Teacher", "teacher_name"),
-                ("Course", "course_name"),
-                ("Date", "reg_date")
+                ('Reg ID', 'reg_id'),
+                ('Student', 'st_name'),
+                ('Teacher', 'teacher_name'),
+                ('Course', 'course_name'),
+                ('Date', 'reg_date')
             ]
         )
 
@@ -138,12 +127,12 @@ class DisplayUtils:
     def print_teaching(teaching_records):
         """Display teaching assignments (Teacher + Course)"""
         DisplayUtils.print_table(
-            "TEACHING ASSIGNMENTS",
+            'TEACHING ASSIGNMENTS',
             teaching_records,
             [
-                ("ID", "tc_id"),
-                ("Teacher", "t_name"),
-                ("Course", "course_name") # Returns course_name from your property
+                ('Teaching ID', 'tc_id'),
+                ('Teacher', 't_name'),
+                ('Course', 'course_name') # Returns course_name from your property
             ]
         )
 
@@ -151,11 +140,11 @@ class DisplayUtils:
     def print_rooms_types(rooms):
         """Display rooms table"""
         DisplayUtils.print_table(
-            "ROOM TYPES LIST",
+            'ROOM TYPES LIST',
             rooms,
             [
-                ("Type ID", "type_id"),
-                ("Type", "type_name")
+                ('Type ID', 'type_id'),
+                ('Type', 'type_name')
             ]
         )
 
@@ -163,14 +152,14 @@ class DisplayUtils:
     def print_rooms(rooms):
         """Display rooms table"""
         DisplayUtils.print_table(
-            "ROOMS LIST",
+            'ROOMS LIST',
             rooms,
             [
-                ("Room ID", "room_id"),
-                ("Label", "room_label"),
-                ("Floor", "floor"),
-                ("Capacity", "capacity"),
-                ("Type", "type_name")
+                ('Room ID', 'room_id'),
+                ('Label', 'room_label'),
+                ('Floor', 'floor'),
+                ('Capacity', 'capacity'),
+                ('Type', 'type_name')
             ]
         )
 
@@ -178,15 +167,15 @@ class DisplayUtils:
     def print_schedule(schedule_list):
         """Display schedule table (Updated with schedule_id)"""
         DisplayUtils.print_table(
-            "SCHEDULE",
+            'SCHEDULE',
             schedule_list,
             [
-                ("ID", "schedule_id"),
-                ("Course", "course_name"),
-                ("Teacher", "teacher_name"),
-                ("Room", "room_label"),
-                ("Type", "type_name"),
-                ("Date", "date_class")
+                ('Schedule ID', 'schedule_id'),
+                ('Course', 'course_name'),
+                ('Teacher', 'teacher_name'),
+                ('Room', 'room_label'),
+                ('Type', 'type_name'),
+                ('Date', 'date_class')
             ]
         )
 
@@ -194,13 +183,25 @@ class DisplayUtils:
     def print_attendance(attendance_list):
         """Display attendance table"""
         DisplayUtils.print_table(
-            "ATTENDANCE RECORDS",
+            'ATTENDANCE RECORDS',
             attendance_list,
             [
-                ("Student", "student_name"),
-                ("Course", "course_name"),
-                ("Date", "date_class"),
-                ("Status", "attendance_status")
+                ('Student', 'student_name'),
+                ('Course', 'course_name'),
+                ('Date', 'date_class'),
+                ('Status', 'attendance_status')
+            ]
+        )
+
+    @staticmethod
+    def print_attendance_for_student(attendance_list):
+        DisplayUtils.print_table(
+            'ATTENDANCE',
+            attendance_list,
+            [
+                ('Course', 'course_name'),
+                ('Date', 'date_class'),
+                ('Status', 'attendance_status')
             ]
         )
 
@@ -212,10 +213,21 @@ class DisplayUtils:
             grades_list,
             [
                 ('Registration ID', 'reg_id'),
-                ("Student", "student_name"),
-                ("Course", "course_name"),
-                ("Final Grade", "final_grade")
+                ('Student', 'student_name'),
+                ('Course', 'course_name'),
+                ('Final Grade', 'final_grade')
             ]
+        )
+
+    @staticmethod
+    def print_grades_for_student(grades_list):
+        DisplayUtils.print_table(
+            'GRADES',
+            grades_list,
+            [
+                ('Course', 'course_name'),
+                ('Final Grade', 'final_grade')
+             ]
         )
 
     # ============ REPORT DISPLAYING ============
@@ -223,25 +235,25 @@ class DisplayUtils:
     @staticmethod
     def print_students_per_course(report):
         if not report:
-            print("\n[!] No data to display\n")
+            print('\n[!] No data to display\n')
             return
 
         rows = [[rep.course_name, rep.total_students] for rep in report]
         print(tabulate(rows,
-                       headers=["Course Name", "Total Students"],
-                       tablefmt="fancy_grid"))
+                       headers=['Course Name', 'Total Students'],
+                       tablefmt='fancy_grid'))
 
     @staticmethod
     def print_average_grades(report):
         if not report:
-            print("\n[!] No data to display\n")
+            print('\n[!] No data to display\n')
             return
 
-        rows = [[rep.course_name, f"{rep.average_grade:.2f}" if rep.average_grade else "N/A"]
+        rows = [[rep.course_name, f'{rep.average_grade:.2f}' if rep.average_grade else 'N/A']
                 for rep in report]
         print(tabulate(rows,
-                       headers=["Course Name", "Average Grade"],
-                       tablefmt="fancy_grid"))
+                       headers=['Course Name', 'Average Grade'],
+                       tablefmt='fancy_grid'))
 
     @staticmethod
     def print_attendance_summary(report):
