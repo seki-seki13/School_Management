@@ -20,7 +20,7 @@ class DatabaseConnection:
             )
 
             if self.connection.is_connected():
-                print('Connected')
+                # print('Connected')
                 return self.connection
         except Error as e:
             print(f'Error connection to MySQL: [{e}]')
@@ -29,4 +29,4 @@ class DatabaseConnection:
     def close_conn(self):
         if self.connection and self.connection.is_connected():
             self.connection.close()
-            print('MySQL connection closed')
+            # print('MySQL connection closed')

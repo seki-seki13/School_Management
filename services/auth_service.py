@@ -1,6 +1,7 @@
 from models.authentication import Authentication
 from database.connection import DatabaseConnection
 from utilities.decorators import transaction
+from models.person import Person
 
 class AuthService:
     def __init__(self):
@@ -44,9 +45,3 @@ class AuthService:
     def new_password(self, cursor, conn, e_username, new_pass):
         new_password = (e_username, new_pass)
         cursor.callproc('update_password', new_password)
-
-    @transaction(dictionary=True)
-    def get_user_profile(self, cursor, conn, pers_id):
-        cursor.callproc('f_user_data', (pers_id,))
-        for result in cursor.stored_results():
-            return result.fetchone()  # Returns the person's info as a dict

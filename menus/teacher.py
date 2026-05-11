@@ -7,3 +7,5 @@ from services.schedule_service import ScheduleService
 from utilities.reporting import ReportingUtils
 from utilities.displaying import DisplayUtils
 
+def run_teach_menu(session):
+    pass

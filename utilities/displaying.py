@@ -143,7 +143,7 @@ class DisplayUtils:
             [
                 ("ID", "tc_id"),
                 ("Teacher", "t_name"),
-                ("Course", "c_id") # Returns course_name from your property
+                ("Course", "course_name") # Returns course_name from your property
             ]
         )
 
@@ -178,7 +178,7 @@ class DisplayUtils:
     def print_schedule(schedule_list):
         """Display schedule table (Updated with schedule_id)"""
         DisplayUtils.print_table(
-            "CLASS SCHEDULE",
+            "SCHEDULE",
             schedule_list,
             [
                 ("ID", "schedule_id"),
@@ -211,6 +211,7 @@ class DisplayUtils:
             "GRADES",
             grades_list,
             [
+                ('Registration ID', 'reg_id'),
                 ("Student", "student_name"),
                 ("Course", "course_name"),
                 ("Final Grade", "final_grade")
@@ -220,40 +221,40 @@ class DisplayUtils:
     # ============ REPORT DISPLAYING ============
 
     @staticmethod
-    def print_students_per_course(report_dict):
-        if not report_dict:
+    def print_students_per_course(report):
+        if not report:
             print("\n[!] No data to display\n")
             return
-        rows = [[course, count] for course, count in report_dict.items()]
-        print(tabulate(rows, headers=["Course Name", "Total Students"], tablefmt="grid"))
+
+        rows = [[rep.course_name, rep.total_students] for rep in report]
+        print(tabulate(rows,
+                       headers=["Course Name", "Total Students"],
+                       tablefmt="fancy_grid"))
 
     @staticmethod
-    def print_average_grades(report_dict):
-        if not report_dict:
+    def print_average_grades(report):
+        if not report:
             print("\n[!] No data to display\n")
             return
-        rows = [[course, f"{grade:.2f}" if grade else "N/A"] for course, grade in report_dict.items()]
-        print(tabulate(rows, headers=["Course Name", "Average Grade"], tablefmt="grid"))
+
+        rows = [[rep.course_name, f"{rep.average_grade:.2f}" if rep.average_grade else "N/A"]
+                for rep in report]
+        print(tabulate(rows,
+                       headers=["Course Name", "Average Grade"],
+                       tablefmt="fancy_grid"))
 
     @staticmethod
-    def print_attendance_summary(report_dict):
-        if not report_dict:
+    def print_attendance_summary(report):
+        if not report:
             print("\n[!] No data to display\n")
             return
-        rows = [[c, s['total'], s['present'], f"{s['attendance_percentage']}%"]
-                for c, s in report_dict.items()]
-        print(tabulate(rows, headers=["Course", "Records", "Present", "%"], tablefmt="grid"))
 
-    # ============ MESSAGE METHODS ============
+        rows = [[rep.course_name, rep.total_records,
+                f'{rep.attendance_percentage}%'
+                if rep.attendance_percentage else '0%']
+                for rep in report]
 
-    @staticmethod
-    def print_success(message):
-        print(f"\n[bold green]✓ SUCCESS:[/bold green] {message}\n")
-
-    @staticmethod
-    def print_error(message):
-        print(f"\n[bold red]✗ ERROR:[/bold red] {message}\n")
-
-    @staticmethod
-    def print_info(message):
-        print(f"\n[bold cyan]ℹ INFO:[/bold cyan] {message}\n")
+        print(tabulate(rows,
+                       headers=['Course', 'Total Records', 'Attendance %'],
+                       tablefmt='fancy_grid'))
+        print()

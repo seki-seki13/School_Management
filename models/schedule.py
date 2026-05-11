@@ -48,3 +48,7 @@ class Schedule:
     @property
     def type_name(self):
         return self.__type_name
+
+    @property
+    def course_name(self):
+        return self.__course_name

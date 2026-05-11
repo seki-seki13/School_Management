@@ -32,7 +32,9 @@ class AdminService:
     @transaction(dictionary=False)
     def add_admin(
             self, cursor, conn, f_name, l_name,
-            dob, e_town, e_address, e_phone, e_email):
+            dob, e_town, e_address, e_phone, e_email,
+            e_username, e_password):
         new_admin = (f_name, l_name, dob, e_town,
-                     e_address, e_phone, e_email)
+                     e_address, e_phone, e_email,
+                     e_username, e_password)
         cursor.callproc('add_admin', new_admin)

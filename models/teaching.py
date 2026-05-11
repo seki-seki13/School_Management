@@ -19,5 +19,5 @@ class Teaching:
         return self.__teacher_name
 
     @property
-    def c_id(self):
+    def course_name(self):
         return self.__course_name

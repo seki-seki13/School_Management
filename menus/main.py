@@ -1,6 +1,8 @@
 import sys
 from services.auth_service import AuthService
-from menus.student_menu import run_stud_menu
+from student import run_stud_menu
+from admin.admin import run_admin
+from teacher import run_teach_menu
 
 def main():
     auth = AuthService()
@@ -24,10 +26,10 @@ def main():
                     pass
                 elif session.role == 'Admin':
                     print('Loading Admin Menu...')
-                    pass
+                    run_admin(session)
             else:
-                ask_again = input('\nLogin failed.\nTry again?\n1. Yes\n2. No\n')
-                if ask_again != '1' or ask_again.lower() != 'yes':
+                ask_again = input('\nLogin failed.\nTry again?(y/n): ')
+                if ask_again.lower() != 'y':
                     print('Program exited.')
                     sys.exit()
         except KeyboardInterrupt:

@@ -16,6 +16,10 @@ class Registration:
         return self.__reg_id
 
     @property
+    def stud_id(self):
+        return self.__stud_id
+
+    @property
     def st_name(self):
         return self.__st_name
 

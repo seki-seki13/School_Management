@@ -57,7 +57,7 @@ class ScheduleService:
             for result in cursor.stored_results():
                 for row in result.fetchall():
                     sch = Schedule(
-                        schedule_id=row[';schedule_id'],
+                        schedule_id=row['schedule_id'],
                         teach_course_id=None,
                         room_id=None,
                         date_class=row['date_class'],

@@ -32,9 +32,11 @@ class StudentService:
     @transaction(dictionary=True)
     def add_student(
             self, cursor, conn, f_name, l_name,
-            dob, e_town, e_address, e_phone, e_email):
+            dob, e_town, e_address, e_phone, e_email,
+            e_username, e_password):
         new_student = (f_name,l_name, dob, e_town,
-                       e_address, e_phone, e_email)
+                       e_address, e_phone, e_email,
+                       e_username, e_password)
         cursor.callproc('add_student', new_student)
 
     @transaction(dictionary=False)

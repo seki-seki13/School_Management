@@ -159,6 +159,7 @@ END //
 CREATE PROCEDURE `v_grades` ()
 BEGIN
     SELECT
+        r.reg_id,
         p.first_name AS student_first_name,
         p.last_name AS student_last_name,
         c.course_name,
@@ -375,7 +376,9 @@ IN dob DATE,
 IN e_town VARCHAR(40),
 IN e_address VARCHAR(50),
 IN e_phone VARCHAR(12),
-IN e_email VARCHAR(100)
+IN e_email VARCHAR(100),
+IN e_username VARCHAR(30),
+IN e_password VARCHAR(255)
 )
 BEGIN
     INSERT INTO People
@@ -386,6 +389,9 @@ BEGIN
 
     INSERT INTO Students (pers_id)
     VALUES (@new_id);
+
+    INSERT INTO Authentication (pers_id, username, password)
+    VALUES (@new_id, e_username, e_password);
 END //
 
 
@@ -396,7 +402,9 @@ IN dob DATE,
 IN e_town VARCHAR(40),
 IN e_address VARCHAR(50),
 IN e_phone VARCHAR(12),
-IN e_email VARCHAR(100)
+IN e_email VARCHAR(100),
+IN e_username VARCHAR(30),
+IN e_password VARCHAR(255)
 )
 BEGIN
     INSERT INTO People
@@ -407,6 +415,9 @@ BEGIN
 
     INSERT INTO Teachers (pers_id)
     VALUES (@new_id);
+
+    INSERT INTO Authentication (pers_id, username, password)
+    VALUES (@new_id, e_username, e_password);
 END //
 
 
@@ -417,7 +428,9 @@ IN dob DATE,
 IN e_town VARCHAR(40),
 IN e_address VARCHAR(50),
 IN e_phone VARCHAR(12),
-IN e_email VARCHAR(100)
+IN e_email VARCHAR(100),
+IN e_username VARCHAR(30),
+IN e_password VARCHAR(255)
 )
 BEGIN
     INSERT INTO People
@@ -428,6 +441,9 @@ BEGIN
 
     INSERT INTO Administration (pers_id)
     VALUES (@new_id);
+
+    INSERT INTO Authentication (pers_id, username, password)
+    VALUES (@new_id, e_username, e_password);
 END //
 
 

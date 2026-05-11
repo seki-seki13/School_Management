@@ -15,7 +15,7 @@ class GradesService:
             for row in result.fetchall():
                 gr = Grade(
                     grade_id=None,
-                    reg_id=None,
+                    reg_id=row['reg_id'],
                     final_grade=row['final_grade'],
                     student_first_name=row['student_first_name'],
                     student_last_name=row['student_last_name'],

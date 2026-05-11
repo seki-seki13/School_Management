@@ -1,30 +1,17 @@
-"""
-Reporting Utility - Generates reports directly from database
-Uses stored procedures: r_students_per_course,
-r_average_grade_per_course, r_attendance_summary
-Returns data only - no displaying
-"""
-
 from database.connection import DatabaseConnection
-from utilities.decorators import transaction
+from utilities.decorators import transaction, sorted_by
 from models.course import CourseReport
 
 
-class ReportingUtils:
-    """Utility class for generating reports"""
 
+class ReportingUtils:
     def __init__(self):
         self.database_manager = DatabaseConnection()
 
+    @sorted_by('total_students', reverse=True)
     @transaction(dictionary=True)
     def students_per_course(self, cursor, conn):
-        """
-        Get count of students per course.
-        Uses: r_students_per_course stored procedure
 
-        Returns:
-            Dictionary {course_name: total_students}
-        """
         cursor.callproc('r_students_per_course')
         report = []
 
@@ -38,15 +25,10 @@ class ReportingUtils:
                 report.append(rep)
         return report
 
+    @sorted_by('average_grade', reverse=True)
     @transaction(dictionary=True)
     def average_grade_per_course(self, cursor, conn):
-        """
-        Get average grade per course.
-        Uses: r_average_grade_per_course stored procedure
 
-        Returns:
-            Dictionary {course_name: average_grade}
-        """
         cursor.callproc('r_average_grade_per_course')
         report = []
 
@@ -60,15 +42,10 @@ class ReportingUtils:
                 report.append(rep)
         return report
 
+    @sorted_by('attendance_percentage', reverse=True)
     @transaction(dictionary=True)
     def attendance_summary(self, cursor, conn):
-        """
-        Get attendance summary by course.
-        Uses: r_attendance_summary stored procedure
 
-        Returns:
-            Dictionary with course attendance statistics
-        """
         cursor.callproc('r_attendance_summary')
         report = []
 

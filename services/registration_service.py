@@ -32,17 +32,18 @@ class RegistrationService:
         cursor.callproc('f_registration', (stud_id,))
         records = []
         for result in cursor.stored_results():
-            for row in result.fetchall():
+            rows = result.fetchall()
+            for row in rows:
                 reg = Registration(
                     reg_id=row['registration_ID'],
-                    stud_id=None,
+                    stud_id=stud_id,
                     teach_course_id=None,
                     student_first_name=row['student_first_name'],
                     student_last_name=row['student_last_name'],
                     teacher_first_name=row['teacher_first_name'],
                     teacher_last_name=row['teacher_last_name'],
                     course_name=row['course_name'],
-                    reg_date=row['date_registered']
+                    reg_date=row['reg_date']
                 )
                 records.append(reg)
         return records

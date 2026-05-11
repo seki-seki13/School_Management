@@ -12,7 +12,7 @@ class Course:
 
     @property
     def course_name(self):
-        return self.__course_id
+        return self.__course_name
 
 class CourseReport(Course):
     def __init__(self, course_id, course_name, **kwargs):
