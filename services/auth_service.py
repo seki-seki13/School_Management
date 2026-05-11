@@ -1,7 +1,6 @@
 from models.authentication import Authentication
 from database.connection import DatabaseConnection
 from utilities.decorators import transaction
-from models.person import Person
 
 class AuthService:
     def __init__(self):
