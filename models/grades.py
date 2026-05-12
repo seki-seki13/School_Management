@@ -7,6 +7,7 @@ class Grade:
         self.__student_name = (f"{kwargs.get('student_first_name', '')} "
                                f"{kwargs.get('student_last_name', '')}").strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
+        self.__course_id = kwargs.get('course_id', '')
 
     @property
     def grade_id(self):
@@ -27,3 +28,7 @@ class Grade:
     @property
     def course_name(self):
         return self.__course_name
+
+    @property
+    def course_id(self):
+        return self.__course_id

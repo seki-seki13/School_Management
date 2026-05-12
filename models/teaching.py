@@ -21,3 +21,7 @@ class Teaching:
     @property
     def course_name(self):
         return self.__course_name
+
+    @property
+    def course_id(self):
+        return self.__course_id

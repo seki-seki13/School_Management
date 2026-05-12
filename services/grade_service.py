@@ -34,13 +34,16 @@ class GradesService:
                 for row in result.fetchall():
                     gr = Grade(
                         grade_id=None,
-                        reg_id=None,
+                        reg_id=row['reg_id'],
                         final_grade=row['final_grade'],
                         student_first_name=row['student_first_name'],
                         student_last_name=row['student_last_name'],
-                        course_name=row['course_name']
+                        course_name=row['course_name'],
+                        course_id=row['course_id']
                     )
                     grades.append(gr)
+
+
         else:
             cursor.callproc('f_grades_student', (pers_id,))
             for result in cursor.stored_results():
@@ -51,10 +54,10 @@ class GradesService:
                         final_grade=row['final_grade'],
                         student_first_name=None,
                         student_last_name=None,
-                        course_name=row['course_name']
+                        course_name=row['course_name'],
+                        course_id=row['course_id']
                     )
                     grades.append(gr)
-            return grades
         return grades
 
 

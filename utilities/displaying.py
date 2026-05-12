@@ -35,7 +35,7 @@ class DisplayUtils:
             [
                 ('First Name', 'first_name'),
                 ('Last Name', 'last_name'),
-                ('DOB', 'birth_date'),
+                ('DOB', 'dob'),
                 ('Town', 'town'),
                 ('Address', 'address'),
                 ('Phone', 'phone'),
@@ -132,7 +132,7 @@ class DisplayUtils:
             [
                 ('Teaching ID', 'tc_id'),
                 ('Teacher', 't_name'),
-                ('Course', 'course_name') # Returns course_name from your property
+                ('Course', 'course_name')
             ]
         )
 
@@ -165,7 +165,7 @@ class DisplayUtils:
 
     @staticmethod
     def print_schedule(schedule_list):
-        """Display schedule table (Updated with schedule_id)"""
+        """Display schedule table"""
         DisplayUtils.print_table(
             'SCHEDULE',
             schedule_list,
@@ -173,6 +173,21 @@ class DisplayUtils:
                 ('Schedule ID', 'schedule_id'),
                 ('Course', 'course_name'),
                 ('Teacher', 'teacher_name'),
+                ('Room', 'room_label'),
+                ('Type', 'type_name'),
+                ('Date', 'date_class')
+            ]
+        )
+
+    @staticmethod
+    def print_schedule_for_teacher(schedule_list):
+        """Display schedule table"""
+        DisplayUtils.print_table(
+            'SCHEDULE',
+            schedule_list,
+            [
+                ('Schedule ID', 'schedule_id'),
+                ('Course', 'course_name'),
                 ('Room', 'room_label'),
                 ('Type', 'type_name'),
                 ('Date', 'date_class')
@@ -213,8 +228,9 @@ class DisplayUtils:
             grades_list,
             [
                 ('Registration ID', 'reg_id'),
-                ('Student', 'student_name'),
+                ('Course ID', 'course_id'),
                 ('Course', 'course_name'),
+                ('Student', 'student_name'),
                 ('Final Grade', 'final_grade')
             ]
         )
@@ -225,6 +241,7 @@ class DisplayUtils:
             'GRADES',
             grades_list,
             [
+                ('Course ID', 'course_id'),
                 ('Course', 'course_name'),
                 ('Final Grade', 'final_grade')
              ]

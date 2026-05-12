@@ -53,12 +53,14 @@ def get_pers_data():
         # Phone Validation (Matching your SQL: +7 followed by 10 digits)
         p = validate_input('Phone (+7XXXXXXXXXX): ',
                            pattern=r'^\+7\d{10}$',
-                           error_msg='Phone must start with +7 followed by 10 digits.')
+                           error_msg='Phone must start with '
+                                     '+7 followed by 10 digits.')
 
         # Email Validation
         e = validate_input('Email: ',
                            pattern=r'^[\w\.-]+@[\w\.-]+\.\w+$',
-                           error_msg='Invalid email format (e.g., name@domain.com).')
+                           error_msg='Invalid email format '
+                                     '(e.g., name@domain.com).')
 
         return f, l, d, t, a, p, e
 

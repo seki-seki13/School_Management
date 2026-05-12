@@ -23,7 +23,7 @@ def main():
                     run_stud_menu(session)
                 elif session.role == 'Teacher':
                     print('Loading Teacher Menu...')
-                    pass
+                    run_teach_menu(session)
                 elif session.role == 'Admin':
                     print('Loading Admin Menu...')
                     run_admin(session)

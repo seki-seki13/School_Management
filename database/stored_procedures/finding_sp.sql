@@ -59,8 +59,7 @@ END //
 
 CREATE PROCEDURE `f_teacher_schedule`
 (
-IN your_pers_id INT,
-IN entered_date DATE
+IN your_pers_id INT
 )
 BEGIN
     SELECT
@@ -163,8 +162,10 @@ IN entered_course_id VARCHAR(15)
 )
 BEGIN
     SELECT
-        p.first_name,
-        p.last_name,
+		r.reg_id,
+        p.first_name as student_first_name,
+        p.last_name as student_last_name,
+        c.course_id,
         c.course_name,
         gr.final_grade
     FROM Grades gr
@@ -174,8 +175,8 @@ BEGIN
     JOIN Teaching tch ON r.teach_course_id = tch.teach_course_id
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
     JOIN Courses c ON tch.course_id = c.course_id
-    WHERE t.pers_id = your_pers_id AND
-    (c.course_id = entered_course_id OR entered_course_id IS NULL);
+    WHERE t.pers_id = your_pers_id
+    AND (c.course_id = entered_course_id OR entered_course_id IS NULL);
 END //
 
 CREATE PROCEDURE `f_grades_student`

@@ -5,11 +5,10 @@ from menus.admin.rooms_menu import run_rooms_submenu
 from menus.admin.reporting_menu import run_reporting_menu
 from menus.admin.admin_menu import run_admin_menu
 from utilities.input_validation import validate_number
+from utilities.displaying import DisplayUtils
+from menus.shared_menu_options import profile_info
 
-
-# ============ HELPERS ===========
-# 1. Automatically print available actions based on entity
-
+disp = DisplayUtils()
 
 # ==============================================
 # ============== MAIN MENU =====================
@@ -29,7 +28,8 @@ def run_admin(session):
               '4. Courses Management\n'
               '5. Rooms Management\n'
               '6. Reports\n'
-              '7. Logout')
+              '7. My Profile\n'
+              '8. Logout')
 
         try:
             main_choice = validate_number('\nSelect category[1-6]: ')
@@ -40,7 +40,8 @@ def run_admin(session):
             elif main_choice == 4: run_courses_menu()
             elif main_choice == 5: run_rooms_submenu()
             elif main_choice == 6: run_reporting_menu()
-            elif main_choice == 7:
+            elif main_choice == 7: disp.print_admins(profile_info(session))
+            elif main_choice == 8:
                 print('Logging out...')
                 break
             else: print('[!] Invalid choice.')

@@ -31,10 +31,10 @@ class ScheduleService:
 
     @sorted_by('date_class')
     @transaction(dictionary=True)
-    def get_my_schedule(self, cursor, conn, role, pers_id, date=None):
+    def get_my_schedule(self, cursor, conn, role, pers_id, date_class=None):
         schedule = []
         if role == 'Teacher':
-            cursor.callproc('f_teacher_schedule', (pers_id, date))
+            cursor.callproc('f_teacher_schedule', (pers_id, date_class))
             for result in cursor.stored_results():
                 for row in result.fetchall():
                     sch = Schedule(
@@ -53,7 +53,7 @@ class ScheduleService:
                     schedule.append(sch)
 
         else:
-            cursor.callproc('f_stud_schedule', (pers_id, date))
+            cursor.callproc('f_stud_schedule', (pers_id, date_class))
             for result in cursor.stored_results():
                 for row in result.fetchall():
                     sch = Schedule(

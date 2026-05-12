@@ -34,7 +34,7 @@ class TeachingService:
                 crs = Teaching(
                     teach_course_id=row['teaching_ID'],
                     teacher_id=None,
-                    course_id=None,
+                    course_id=row['course_id'],
                     course_name=row['course_name']
                 )
                 courses.append(crs)
