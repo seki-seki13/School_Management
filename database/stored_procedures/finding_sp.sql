@@ -1,6 +1,10 @@
-DELIMITER //
+-----------------------------------------------
+-- FINDING: Stored procedures dedicated to finding specific records
+-- Later used alongside binary search algorithm
+-- Procedures accept IN parameters
+-----------------------------------------------
 
--- FINDING SELECTED
+DELIMITER //
 
 CREATE PROCEDURE `f_user_data`
 (
@@ -19,6 +23,7 @@ BEGIN
     FROM People
     WHERE pers_id = your_pers_id;
 END //
+-----------------------
 
 CREATE PROCEDURE `f_course_by_teacher`
 (
@@ -33,6 +38,7 @@ BEGIN
     JOIN Courses c ON tch.course_id = c.course_id
     WHERE t.pers_id = your_pers_id;
 END //
+-----------------------
 
 CREATE PROCEDURE `f_registration`
 (
@@ -56,10 +62,12 @@ BEGIN
     JOIN People pt ON t.pers_id = pt.pers_id
     WHERE s.stud_id = entered_stud_id OR entered_stud_id IS NULL;
 END //
+-----------------------
 
 CREATE PROCEDURE `f_teacher_schedule`
 (
-IN your_pers_id INT
+IN your_pers_id INT,
+IN entered_date DATE
 )
 BEGIN
     SELECT
@@ -78,6 +86,9 @@ BEGIN
     WHERE t.pers_id = your_pers_id
     AND (sch.date_class = entered_date OR entered_date IS NULL);
 END //
+----------------------------------------------
+-- Procedures below are utilized based on the role of the current user
+-- to ensure different and meaningful outputs and data integrity
 
 CREATE PROCEDURE `f_stud_schedule`
 (
@@ -106,11 +117,12 @@ BEGIN
     WHERE s.pers_id = your_pers_id
     AND (sch.date_class = entered_date OR entered_date IS NULL);
 END //
+-----------------------
 
 CREATE PROCEDURE `f_attendance_for_teacher`
 (
 IN your_pers_id INT,
-IN entered_sch_id VARCHAR(50)
+IN entered_sch_id INT
 )
 BEGIN
     SELECT
@@ -133,6 +145,7 @@ BEGIN
     WHERE t.pers_id = your_pers_id AND
     (sch.schedule_id = entered_sch_id OR entered_sch_id IS NULL);
 END //
+-----------------------
 
 CREATE PROCEDURE `f_attendance_for_student`
 (
@@ -154,6 +167,7 @@ BEGIN
     JOIN Courses c ON tch.course_id = c.course_id
     WHERE s.pers_id = your_pers_id;
 END //
+-----------------------
 
 CREATE PROCEDURE `f_grades_teacher`
 (
@@ -178,6 +192,7 @@ BEGIN
     WHERE t.pers_id = your_pers_id
     AND (c.course_id = entered_course_id OR entered_course_id IS NULL);
 END //
+-----------------------
 
 CREATE PROCEDURE `f_grades_student`
 (

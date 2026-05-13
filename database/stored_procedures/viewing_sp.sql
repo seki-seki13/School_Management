@@ -1,6 +1,14 @@
+-----------------------------------------------
+-- VIEWING: Stored procedures dedicated to retrieving data from tables
+-- done in a meaningful way by JOIN-ing tables on FKs
+-- Retrieving Full Names of people is done through
+-- Student, Teacher, Administration tables
+-----------------------------------------------
 DELIMITER //
 
--- VIEWING
+-- Students, Teachers, Administration tables JOIN-ed with
+-- People table records on pers_id FK.
+-- Handled separately for clarity and easier debugging
 CREATE PROCEDURE `v_students` ()
 BEGIN
     SELECT
@@ -16,6 +24,7 @@ BEGIN
     FROM Students s
     JOIN People p ON s.pers_id = p.pers_id;
 END //
+-----------------------
 
 CREATE PROCEDURE `v_teachers` ()
 BEGIN
@@ -32,7 +41,7 @@ BEGIN
     FROM Teachers t
     JOIN People p ON t.pers_id = p.pers_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `v_admins` ()
 BEGIN
@@ -50,13 +59,16 @@ BEGIN
     JOIN People p ON a.pers_id = p.pers_id;
 END //
 
-
+-----------------------------------------------
+-- Courses table itself is meaningful enough since does not has FKs
 CREATE PROCEDURE `v_courses` ()
 BEGIN
     SELECT * FROM Courses;
 END //
 
-
+-----------------------------------------------
+-- Room_types used both in its individual display and for
+-- meaningful type names in Rooms table display
 CREATE PROCEDURE `v_rooms` ()
 BEGIN
     SELECT
@@ -69,7 +81,7 @@ BEGIN
     FROM Rooms r
     JOIN Room_Types rt ON r.type_id = rt.type_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `v_room_types` ()
 BEGIN
@@ -79,7 +91,11 @@ BEGIN
     FROM Room_Types;
 END //
 
-
+-----------------------------------------------
+-- All tables below utilise the same JOIN principle for
+-- meaningful data display
+-- Aliases (xxx AS zzz) are used for clarity
+-----------------------------------------------
 CREATE PROCEDURE `v_teaching` ()
 BEGIN
     SELECT
@@ -92,8 +108,7 @@ BEGIN
     JOIN People p ON t.pers_id = p.pers_id
     JOIN Courses c ON tch.course_id = c.course_id;
 END //
-
-
+-----------------------------------------------
 CREATE PROCEDURE `v_registration` ()
 BEGIN
     SELECT
@@ -112,8 +127,7 @@ BEGIN
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
     JOIN People pt ON t.pers_id = pt.pers_id; -- people-teacher
 END //
-
-
+-----------------------------------------------
 CREATE PROCEDURE `v_schedule` ()
 BEGIN
     SELECT
@@ -134,8 +148,7 @@ BEGIN
     JOIN Rooms r ON sch.room_id = r.room_id
     JOIN Room_Types rt ON r.type_id = rt.type_id;
 END //
-
-
+-----------------------------------------------
 CREATE PROCEDURE `v_attendance` ()
 BEGIN
     SELECT
@@ -143,6 +156,7 @@ BEGIN
         sch.date_class,
         p.first_name AS student_first_name,
         p.last_name AS student_last_name,
+        -- Specify meaning behind numbers for attendance representation
         CASE
             WHEN att.status = 0 THEN 'Absent'
             WHEN att.status = 1 THEN 'Late'
@@ -155,7 +169,7 @@ BEGIN
     JOIN Teaching tch ON sch.teach_course_id = tch.teach_course_id
     JOIN Courses c ON tch.course_id = c.course_id;
 END //
-
+-----------------------------------------------
 CREATE PROCEDURE `v_grades` ()
 BEGIN
     SELECT

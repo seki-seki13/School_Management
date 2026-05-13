@@ -1,9 +1,8 @@
--- Stored procedures dedicated to creating reports across tables
+-----------------------------------------------
+-- REPORTING: Stored procedures dedicated to creating reports across tables
 -- and utilities assisting authentication and user role identification
-
+-----------------------------------------------
 DELIMITER //
-
--- REPORTING
 
 -- The procedure counts and displays course name alongside
 -- the number of students registered on it by joining
@@ -22,7 +21,7 @@ BEGIN
     ORDER BY total_students DESC;
 END //
 
-
+-----------------------------------------------
 -- The procedure calculates the average grades associated with courses.
 -- This is performed by connecting Grades table with Registration,
 -- Teaching and Courses tables; the results are organised
@@ -40,6 +39,7 @@ BEGIN
     ORDER BY average_grade DESC;
 END //
 
+-----------------------------------------------
 -- The procedure produces a report of the amount of “Present” (2)
 -- students and then calculates the presence percentage against
 -- total records.
@@ -74,8 +74,9 @@ BEGIN
     ORDER BY attendance_percentage DESC;
 END //
 
+-----------------------------------------------
 -- USER ROLE
-
+-----------------------------------------------
 -- The procedure accepts a username as a parameter (IN)
 -- and on its basis finds corresponding person ID and password
 -- in Authentication table
@@ -89,6 +90,7 @@ BEGIN
     WHERE username = e_username;
 END //
 
+-----------------------------------------------
 -- The procedure accepts person ID as a parameter (IN) and
 -- identifies the role of the person with such an ID by
 -- searching for match in Administration, Teachers and Students tables

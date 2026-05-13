@@ -1,7 +1,16 @@
+-----------------------------------------------
+-- UPDATING: Stored procedures dedicated to updating existing records
+-- Procedures accept IN parameters
+-- Full CRUD is applied mainly to most meaningful and system-relevant
+-- entities specified in the assignment and chosen in requirement
+-- elicitation process
+-----------------------------------------------
+
 DELIMITER //
 
--- UPDATING
-
+-- Updating people is handled separately for students and teachers
+-- to clearly distinguish them and for clearer distinction
+-- in admin_menu to reduce confusion and ease debugging
 CREATE PROCEDURE `update_student` (
 IN s_id INT,
 IN f_name VARCHAR(50),
@@ -26,7 +35,7 @@ BEGIN
         email = e_email
     WHERE pers_id = p_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `update_teacher` (
 IN t_id INT,
@@ -52,7 +61,7 @@ BEGIN
         email = e_email
     WHERE pers_id = p_id;
 END //
-
+----------------------------------------------
 
 CREATE PROCEDURE `update_course` (
 IN c_id VARCHAR(15),
@@ -63,7 +72,7 @@ BEGIN
     SET course_name = c_name
     WHERE course_id = c_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `update_teaching` (
     IN tc_id INT,
@@ -76,7 +85,7 @@ BEGIN
         course_id = new_c_id
     WHERE teach_course_id = tc_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `update_registration` (
     IN r_id INT,
@@ -89,7 +98,7 @@ BEGIN
         teach_course_id = new_tc_id
     WHERE reg_id = r_id;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `update_password` (
 IN e_username VARCHAR(30),
@@ -100,7 +109,7 @@ BEGIN
     SET password = new_pass
     WHERE username = e_username;
 END //
-
+-----------------------
 
 CREATE PROCEDURE `update_grade` (
 IN r_id INT,
