@@ -55,6 +55,7 @@ class ReportingUtils:
                     course_id=None,
                     course_name=row['course_name'],
                     total_records=row['total_records'],
+                    present_count=row['present_count'],
                     attendance_percentage=
                     row['attendance_percentage']
                 )

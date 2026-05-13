@@ -1,7 +1,15 @@
+-- Stored procedures dedicated to creating reports across tables
+-- and utilities assisting authentication and user role identification
+
 DELIMITER //
 
 -- REPORTING
 
+-- The procedure counts and displays course name alongside
+-- the number of students registered on it by joining
+-- Registration table with Teaching and Courses tables.
+-- The results are organised in descending order and
+-- grouped by course name
 CREATE PROCEDURE `r_students_per_course` ()
 BEGIN
     SELECT
@@ -15,6 +23,10 @@ BEGIN
 END //
 
 
+-- The procedure calculates the average grades associated with courses.
+-- This is performed by connecting Grades table with Registration,
+-- Teaching and Courses tables; the results are organised
+-- in a descending order and grouped by course name
 CREATE PROCEDURE `r_average_grade_per_course` ()
 BEGIN
     SELECT
@@ -28,7 +40,16 @@ BEGIN
     ORDER BY average_grade DESC;
 END //
 
-
+-- The procedure produces a report of the amount of “Present” (2)
+-- students and then calculates the presence percentage against
+-- total records.
+-- The operation is performed by utilising:
+-- aggregate functions (ROUND, SUM),
+-- conditional expression (CASE WHEN)
+-- and arithmetical operators (*, /);
+-- Attendance is joined with Schedule, Teaching and Courses tables.
+-- The results are grouped by course name and organised in a
+-- descending attendance percentage order
 CREATE PROCEDURE `r_attendance_summary` ()
 BEGIN
     SELECT
@@ -55,6 +76,9 @@ END //
 
 -- USER ROLE
 
+-- The procedure accepts a username as a parameter (IN)
+-- and on its basis finds corresponding person ID and password
+-- in Authentication table
 CREATE PROCEDURE `get_auth_by_username`
 (IN e_username VARCHAR(30))
 BEGIN
@@ -65,7 +89,9 @@ BEGIN
     WHERE username = e_username;
 END //
 
-
+-- The procedure accepts person ID as a parameter (IN) and
+-- identifies the role of the person with such an ID by
+-- searching for match in Administration, Teachers and Students tables
 CREATE PROCEDURE `get_user_role`
 (
 IN p_id INT

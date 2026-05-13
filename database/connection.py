@@ -1,4 +1,3 @@
-from functools import wraps
 import mysql.connector
 from mysql.connector import Error
 

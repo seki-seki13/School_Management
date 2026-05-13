@@ -32,7 +32,7 @@ def run_admin(session):
               '8. Logout')
 
         try:
-            main_choice = validate_number('\nSelect category[1-6]: ')
+            main_choice = validate_number('\nSelect category[1-8]: ')
 
             if main_choice == 1: run_admin_menu()
             elif main_choice == 2: run_student_submenu()
@@ -40,7 +40,7 @@ def run_admin(session):
             elif main_choice == 4: run_courses_menu()
             elif main_choice == 5: run_rooms_submenu()
             elif main_choice == 6: run_reporting_menu()
-            elif main_choice == 7: disp.print_admins(profile_info(session))
+            elif main_choice == 7: profile_info(session)
             elif main_choice == 8:
                 print('Logging out...')
                 break

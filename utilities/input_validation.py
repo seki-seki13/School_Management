@@ -72,7 +72,7 @@ def course_valid(prompt):
     while True:
         cid = validate_input(prompt,
                              pattern=r'^\d{3}[A-Z]{3}$',
-                             error_msg='Invalid course ID (e.g., 001ALG).')
+                             error_msg='Invalid course ID (e.g., 001ALG).').strip()
         return cid
 
 def date_class_validator():

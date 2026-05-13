@@ -278,12 +278,12 @@ class DisplayUtils:
             print("\n[!] No data to display\n")
             return
 
-        rows = [[rep.course_name, rep.total_records,
+        rows = [[rep.course_name, rep.total_records, rep.present_count,
                 f'{rep.attendance_percentage}%'
                 if rep.attendance_percentage else '0%']
                 for rep in report]
 
         print(tabulate(rows,
-                       headers=['Course', 'Total Records', 'Attendance %'],
+                       headers=['Course', 'Total Records', 'Present', 'Attendance %'],
                        tablefmt='fancy_grid'))
         print()

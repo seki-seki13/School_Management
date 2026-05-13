@@ -16,6 +16,7 @@ class GradesService:
                 gr = Grade(
                     grade_id=None,
                     reg_id=row['reg_id'],
+                    course_id=row['course_id'],
                     final_grade=row['final_grade'],
                     student_first_name=row['student_first_name'],
                     student_last_name=row['student_last_name'],

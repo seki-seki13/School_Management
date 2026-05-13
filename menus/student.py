@@ -1,8 +1,5 @@
-from services.grade_service import GradesService
-from services.schedule_service import ScheduleService
-
 from utilities.displaying import DisplayUtils
-from utilities.input_validation import validate_number, validate_input
+from utilities.input_validation import validate_number
 from menus.shared_menu_options import profile_info, attendance_menu, schedule_menu, grades_menu
 
 

@@ -1,19 +1,28 @@
+-- A MySQL database and tables creation schema
+-- Constraints are set for entering data validation
+-- They are specified with names for easier debugging
+
+-- First check if the database exists
+-- Create it if it does not exist
+-- Use it
 CREATE DATABASE IF NOT EXISTS School_Management_System;
 USE School_Management_System;
 SHOW TABLES;
 
--- Base Tables --
+-- Base Tables with no foreign keys (FK)
 
+-- A future 'Parent' class in OOP structure
+-- Contains personal details of all people existing in the system
 CREATE TABLE People (
-pers_id INT PRIMARY KEY AUTO_INCREMENT,
+pers_id INT PRIMARY KEY AUTO_INCREMENT, -- primary key
 first_name VARCHAR (50) NOT NULL,
 last_name VARCHAR (50) NOT NULL,
 DoB DATE NOT NULL,
-town VARCHAR(40) NOT NULL DEFAULT 'Astana',
+town VARCHAR(40) NOT NULL DEFAULT 'Astana', -- default value
 address VARCHAR(50) NOT NULL,
-phone VARCHAR(12) NOT NULL UNIQUE,
-email VARCHAR(100) NOT NULL UNIQUE,
-
+phone VARCHAR(12) NOT NULL UNIQUE, -- unique
+email VARCHAR(100) NOT NULL UNIQUE, -- unique
+-- Constraints for names, date of birth, phone and email
 CONSTRAINT check_first_name CHECK (CHAR_LENGTH(first_name)>=3),
 CONSTRAINT check_last_name CHECK (CHAR_LENGTH(last_name)>=3),
 CONSTRAINT check_dob CHECK (DoB >= '1945-01-01'),
@@ -21,30 +30,39 @@ CONSTRAINT check_phone CHECK (phone REGEXP '^\\+7[0-9]{10}$'),
 CONSTRAINT check_email CHECK (email LIKE '%@%.%')
 );
 
+-- A table containing courses IDs and names
+-- IDs are not auto_incremented for more meaningful keys
+-- e.g., not [1] but [001ALG]
 CREATE TABLE Courses (
 course_id VARCHAR(15) PRIMARY KEY,
 course_name VARCHAR(50) NOT NULL,
-
+-- Constraint for course_name
 CONSTRAINT check_course_name CHECK (CHAR_LENGTH(course_name) >= 3)
 );
 
+-- A table for room types
+-- Separated from future 'Room' table for normalisation
 CREATE TABLE Room_Types (
 type_id INT PRIMARY KEY AUTO_INCREMENT,
 type_name VARCHAR(30) NOT NULL,
-
+-- Constraint for type_name
 CONSTRAINT check_room_type_name CHECK (CHAR_LENGTH(type_name)>=4)
 );
 
--- Related Tables --
+-- Related Tables
+-- Have FKs referencing tables specified earlier
 
--- People --
+-- A table for login details (username, password)
+-- FK pers_id references People table
 CREATE TABLE Authentication (
 auth_id INT PRIMARY KEY AUTO_INCREMENT,
-pers_id INT NOT NULL UNIQUE,
-username VARCHAR(30) NOT NULL UNIQUE,
+pers_id INT NOT NULL UNIQUE, -- no duplicate people
+username VARCHAR(30) NOT NULL UNIQUE, -- unique
 password VARCHAR(255) NOT NULL,
-
+-- ON DELETE CASCADE used for automatic deletion of a record
+-- Activates if a corresponding People record is deleted
 FOREIGN KEY (pers_id) REFERENCES People(pers_id) ON DELETE CASCADE,
+-- Constraints for username and password
 CONSTRAINT check_username CHECK (CHAR_LENGTH(username) >= 5),
 CONSTRAINT check_password CHECK (CHAR_LENGTH(password) >= 12)
 );

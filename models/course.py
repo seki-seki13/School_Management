@@ -21,6 +21,7 @@ class CourseReport(Course):
         self.__total_students = kwargs.get('total_students')
         self.__average_grade = kwargs.get('average_grade')
         self.__total_records = kwargs.get('total_records')
+        self.__present_count = kwargs.get('present_count')
         self.__attendance_percentage = kwargs.get('attendance_percentage')
 
     @property
@@ -34,6 +35,10 @@ class CourseReport(Course):
     @property
     def total_records(self):
         return self.__total_records
+
+    @property
+    def present_count(self):
+        return self.__present_count
 
     @property
     def attendance_percentage(self):

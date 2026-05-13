@@ -77,6 +77,7 @@ def student_management():
                             un = input('Username(>5): ')
                             pw = input('Password(>12): ')
                             student_serv.add_student(f, l, d, t, a, p, e, un, pw)
+                            break
                         except Exception as e:
                             print('[!] Invalid Login. Try again')
 
