@@ -1,12 +1,18 @@
-from utilities.displaying import DisplayUtils
+# Importing validation utilities and common menu options
 from utilities.input_validation import validate_number
-from menus.shared_menu_options import profile_info, attendance_menu, schedule_menu, grades_menu
+from menus.shared_menu_options import (profile_info, attendance_menu,
+                                       schedule_menu, grades_menu)
 
 
 def run_stud_menu(session):
-    disp = DisplayUtils()
+    """
+    Manage the Student portal.
 
+    Uses loop for continuous execution.
+    Input is validated with the validation utility (R7).
+    """
     print('Student Menu Loading Successful')
+
     while True:
         print(f'\n{'=' * 30}\n'
               ' Student Menu\n'
@@ -20,27 +26,31 @@ def run_stud_menu(session):
               '5. Logout')
 
         options = [1, 2, 3, 4, 5]
+
         try:
             action = validate_number('Selected: ')
+
             if action not in options:
                 print(f'There is no [{action}] option. Try again.\n')
-            else:
-                if action == 5:
+
+            elif action == 5:
                     print('Logging out...')
                     break
 
-                elif action == 1:
-                    schedule_menu(session.role, session.pers_id)
+            # Redirecting to specific menus
+            # if-else structure for choice routing
+            elif action == 1:
+                schedule_menu(session.role, session.pers_id)
 
-                elif action == 2:
-                    grades_menu(session.role, session.pers_id)
+            elif action == 2:
+                grades_menu(session.role, session.pers_id)
 
-                elif action == 3:
-                    attendance_menu(session.role, session.pers_id)
+            elif action == 3:
+                attendance_menu(session.role, session.pers_id)
 
-                elif action == 4:
-                    profile = profile_info(session)
-                    disp.print_students(profile)
+            elif action == 4:
+                profile_info(session)
 
+        # Unexpected errors handled with try-except
         except Exception as e:
-            print(f'Error: {e}')
+            print(f'[!] Invalid input or Error: {e}')

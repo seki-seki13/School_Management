@@ -114,7 +114,8 @@ teach_course_id INT PRIMARY KEY AUTO_INCREMENT,
 teacher_id INT NOT NULL,
 course_id VARCHAR(15) NOT NULL,
 
-FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id),
+FOREIGN KEY (teacher_id)
+REFERENCES Teachers(teacher_id) ON DELETE CASCADE,
 FOREIGN KEY (course_id) REFERENCES Courses(course_id)
 );
 
@@ -128,7 +129,8 @@ teach_course_id INT NOT NULL,
 reg_date DATE NOT NULL DEFAULT (CURRENT_DATE),--default on current date
 
 FOREIGN KEY (stud_id) REFERENCES Students(stud_id),
-FOREIGN KEY (teach_course_id) REFERENCES Teaching(teach_course_id),
+FOREIGN KEY (teach_course_id)
+REFERENCES Teaching(teach_course_id) ON DELETE CASCADE,
 -- A constraint for ensuring student age is suitable for school
 CONSTRAINT check_registration_date CHECK (reg_date >= '2000-09-01'),
 UNIQUE (stud_id, teach_course_id) -- no duplicate registrations
@@ -158,7 +160,8 @@ teach_course_id INT NOT NULL,
 room_id INT,
 date_class DATE NOT NULL,
 
-FOREIGN KEY (teach_course_id) REFERENCES Teaching(teach_course_id),
+FOREIGN KEY (teach_course_id)
+REFERENCES Teaching(teach_course_id) ON DELETE CASCADE,
 FOREIGN KEY (room_id) REFERENCES Rooms(room_id) ON DELETE SET NULL
 );
 

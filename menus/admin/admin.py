@@ -1,19 +1,26 @@
+# Importing submenus which handle specific logical groups of admin menu
 from menus.admin.student_submenu import run_student_submenu
 from menus.admin.teacher_submenu import run_teacher_submenu
 from menus.admin.courses_menu import run_courses_menu
 from menus.admin.rooms_menu import run_rooms_submenu
 from menus.admin.reporting_menu import run_reporting_menu
 from menus.admin.admin_menu import run_admin_menu
+
+# Utility and shared imports
 from utilities.input_validation import validate_number
-from utilities.displaying import DisplayUtils
 from menus.shared_menu_options import profile_info
 
-disp = DisplayUtils()
-
-# ==============================================
-# ============== MAIN MENU =====================
 
 def run_admin(session):
+    """
+    Manage main Admin menu (the highest level of authority and access).
+
+    The function acts as a central router, directing the user to
+    specific submenus. Separation (R2) is implemented for
+    organisation and easier debugging.
+    """
+    print('Admin Menu Loading Successful')
+
     while True:
         print(f'\n{'=' * 30}\n'
               ' ADMIN MENU\n'
@@ -32,8 +39,10 @@ def run_admin(session):
               '8. Logout')
 
         try:
-            main_choice = validate_number('\nSelect category[1-8]: ')
+            main_choice = validate_number('\nSelect category: ')
 
+            # Redirection to chosen submenus
+            # if-else structure for choice routing
             if main_choice == 1: run_admin_menu()
             elif main_choice == 2: run_student_submenu()
             elif main_choice == 3: run_teacher_submenu()
@@ -41,10 +50,13 @@ def run_admin(session):
             elif main_choice == 5: run_rooms_submenu()
             elif main_choice == 6: run_reporting_menu()
             elif main_choice == 7: profile_info(session)
+
             elif main_choice == 8:
                 print('Logging out...')
                 break
+
             else: print('[!] Invalid choice.')
 
-        except ValueError:
-            print('[!] Input must be a number.')
+        # Unexpected errors handled with try-except
+        except Exception as e:
+            print(f'[!] Invalid input or Error: {e}')

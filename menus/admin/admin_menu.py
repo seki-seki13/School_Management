@@ -1,26 +1,39 @@
+# Importing display, search and validation utilities
 from utilities.displaying import DisplayUtils
 from utilities.searching import SearchUtils
 from utilities.menu_print import print_crud_options
 from utilities.input_validation import get_pers_data, validate_number
 
+# Importing service layer for administrative database operations
 from services.admin_services import AdminService
 
+# Initialising service and utility instances for global use in this module
 admin_serv = AdminService()
 disp = DisplayUtils()
 searcher = SearchUtils()
 
-# ======== ADMIN MENU ========
+
 def run_admin_menu():
+    """
+    Manage the list of administrative accounts.
+    Utilises a loop for continuous execution and
+    employs match-case logic for operation routing.
+    """
+    # Define allowed action IDs: 1 (View), 3 (Find), 4 (Add)
     actions = [1, 3, 4]
 
     while True:
+        # Generate the dynamic CRUD menu based on the allowed actions
         print_crud_options('Admin', actions)
+
         try:
             choice = validate_number('Action: ')
 
+            # Break the loop to return to the previous menu
             if choice == len(actions) + 1:
                 break
 
+            # Identify the specific action ID based on user selection
             actual_action = actions[choice - 1]
 
             match actual_action:
@@ -29,10 +42,14 @@ def run_admin_menu():
                     disp.print_admins(data)
 
                 case 3:  # Find (Binary Search)
+                    # Load data into memory
                     data = admin_serv.view_all_admins()
                     a_id = validate_number('Enter Admin ID to find: ')
+
+                    # Utilise Binary Search
                     found = searcher.binary_search(
                         data, a_id, 'admin_id')
+
                     if found:
                         disp.print_admins([found])
                     else:
@@ -40,16 +57,24 @@ def run_admin_menu():
 
                 case 4:  # Add
                     print('--- Adding Admin ---')
+
+                    # Collect validated personal details
                     f, l, d, t, a, p, e = get_pers_data()
+
                     print('--- Login Details ---')
+
                     while True:
                         try:
                             un = input('Username(>5): ')
                             pw = input('Password(>12): ')
+
+                            # Pass input to the service
                             admin_serv.add_admin(f, l, d, t, a, p, e, un, pw)
                             break
-                        except Exception as e:
-                            print('[!] Invalid Login. Try again')
 
+                        except Exception as e:
+                            print(f'[!] Invalid Login: {e}')
+
+        # Unexpected errors handled with try-except
         except Exception as e:
-            print(f"Invalid input or Error: {e}")
+            print(f'[!] Invalid input or Error: {e}')
