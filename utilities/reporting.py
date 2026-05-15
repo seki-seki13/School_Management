@@ -33,7 +33,7 @@ class ReportingUtils:
         # Iterate through the stored procedure results
         for result in cursor.stored_results():
             for row in result.fetchall():
-                # Map rows to model
+                # Instantiating the model with data
                 rep = CourseReport(
                     course_id=None,
                     course_name=row['course_name'],
@@ -59,7 +59,7 @@ class ReportingUtils:
         # Iterate through the stored procedure results
         for result in cursor.stored_results():
             for row in result.fetchall():
-                # Map rows to model
+                # Instantiating the model with data
                 rep = CourseReport(
                     course_id=None,
                     course_name=row['course_name'],
@@ -85,7 +85,7 @@ class ReportingUtils:
         # Iterate through the stored procedure results
         for result in cursor.stored_results():
             for row in result.fetchall():
-                # Map rows to model
+                # Instantiating the model with data
                 rep = CourseReport(
                     course_id=None,
                     course_name=row['course_name'],
