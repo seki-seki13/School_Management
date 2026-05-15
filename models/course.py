@@ -1,11 +1,20 @@
 class Course:
+    """
+    Class for course entities.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers.
+    Provides the foundation for course reporting through inheritance.
+    """
     def __init__(self, course_id, course_name):
+        # Primary identifier (e.g., '001ALG')
         self.__course_id = course_id
 
         if not course_name:
             raise ValueError('Course name required')
         self.__course_name = course_name
 
+
+    # Allow safe and secure data retrieval
     @property
     def course_id(self):
         return self.__course_id
@@ -14,16 +23,29 @@ class Course:
     def course_name(self):
         return self.__course_name
 
+
 class CourseReport(Course):
+    """
+    Subclass representing statistical course data.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers.
+    """
     def __init__(self, course_id, course_name, **kwargs):
+        # Pass inherited attributes
+        # course_id is None for reports generated
+        # from an aggregation view
         super().__init__(course_id=None, course_name=course_name)
 
+        # Statistical report attributes
+        # from stored procedure (r_procedures)
         self.__total_students = kwargs.get('total_students')
         self.__average_grade = kwargs.get('average_grade')
         self.__total_records = kwargs.get('total_records')
         self.__present_count = kwargs.get('present_count')
         self.__attendance_percentage = kwargs.get('attendance_percentage')
 
+
+    # Allow safe and secure data retrieval
     @property
     def total_students(self):
         return self.__total_students

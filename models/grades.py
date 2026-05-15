@@ -1,14 +1,26 @@
 class Grade:
+    """
+    Class for grade records.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers
+    """
     def __init__(self, grade_id, reg_id, final_grade, **kwargs):
+        # Primary identifier
         self.__grade_id = grade_id
+
+        # Primary attributes
         self.__reg_id = reg_id
         self.__final_grade = final_grade
 
+        # Attributes for cleaner and meaningful display
         self.__student_name = (f"{kwargs.get('student_first_name', '')} "
-                               f"{kwargs.get('student_last_name', '')}").strip()
+                               f"{kwargs.get('student_last_name', '')}"
+                               ).strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
         self.__course_id = kwargs.get('course_id', '')
 
+
+    # Allow safe and secure data retrieval
     @property
     def grade_id(self):
         return self.__grade_id

@@ -1,16 +1,30 @@
 class Attendance:
-    def __init__(self, attendance_id, schedule_id, stud_id, attendance_status, **kwargs):
+    """
+    Class for attendance objects.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers.
+    """
+    def __init__(
+            self, attendance_id, schedule_id,
+            stud_id, attendance_status, **kwargs):
+        # Primary identifier
         self.__attendance_id =attendance_id
+
+        # FKs and primary attributes
         self.__schedule_id = schedule_id
         self.__stud_id = stud_id
         self.__status = attendance_status
 
+        # Attributes for cleaner and meaningful display
         self.__course_name = kwargs.get('course_name', 'None')
         self.__date_class = kwargs.get('date_class', '')
         self.__student_name = (f"{kwargs.get('student_first_name', '')} "
-                             f"{kwargs.get('student_last_name', '')}").strip()
+                             f"{kwargs.get('student_last_name', '')}"
+                               ).strip()
         self.__teacher_id = kwargs.get('teacher_id', '')
 
+
+    # Allow safe and secure data retrieval
     @property
     def attendance_id(self):
         return self.__attendance_id

@@ -1,6 +1,13 @@
 class Person:
+    """
+    Parent class for all people records.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers.
+    """
     def __init__(
-            self, pers_id, f_name, l_name, dob, town, address, phone, email):
+            self, pers_id, f_name, l_name, dob,
+            town, address, phone, email):
+        # Primary identifier
         self.__pers_id = pers_id
 
         if not f_name:
@@ -15,6 +22,8 @@ class Person:
         self.__phone = phone
         self.__email = email
 
+
+    # Allow safe and secure data retrieval
     @property
     def pers_id(self):
         return self.__pers_id

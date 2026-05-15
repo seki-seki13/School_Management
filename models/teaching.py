@@ -1,15 +1,26 @@
 class Teaching:
-    def __init__(self, teach_course_id, teacher_id, course_id, **kwargs):
-        # primary attributes of the Teaching table
+    """
+    Class representing a teacher-to-course assignment.
+    Encapsulates data and then safely retrieves through @property.
+    Input validation is mostly done in database and input layers
+    """
+    def __init__(
+            self, teach_course_id, teacher_id,
+            course_id, **kwargs):
+        # Primary identifier
         self.__teach_course_id = teach_course_id
+
+        # FKs
         self.__teacher_id = teacher_id
         self.__course_id = course_id
 
-        # display attributes. later used in rich table display
+        # Attributes for cleaner and meaningful display
         self.__teacher_name = (f"{kwargs.get('first_name', '')} "
                                f"{kwargs.get('last_name')}").strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
 
+
+    # Allow safe and secure data retrieval
     @property
     def tc_id(self):
         return self.__teach_course_id
