@@ -10,7 +10,7 @@ class GradesService:
     Handles the execution of stored procedures related to the
     Grades table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: viewing, adding and updating.
     """
     def __init__(self):
         # Initialise the database manager for transaction handling

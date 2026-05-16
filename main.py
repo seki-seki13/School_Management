@@ -1,9 +1,9 @@
 import sys
 # Importing the logic for authentication and role-based menus
 from services.auth_service import AuthService
-from student import run_stud_menu
-from admin.admin import run_admin
-from teacher import run_teach_menu
+from menus.student import run_stud_menu
+from menus.admin.admin import run_admin
+from menus.teacher import run_teach_menu
 
 
 def main():
@@ -12,16 +12,8 @@ def main():
     Handles the authentication loop,
     directs users to appropriate menus.
 
-    Login details (Use these for the first entry):
-    username: alinaadmin
-    password: alina123456789
-
-    For easier program operation checking all other logins are:
-    1. username = person name (e.g. Aisha)
-    2. password = (person name)x3 (e.g. AishaAishaAisha)
-
-    R9: Loop implemented for continuous program execution
-    unless the user decides to quit
+    Loop implemented for continuous program execution
+    unless the user decides to quit (R9).
     """
     auth = AuthService()
 

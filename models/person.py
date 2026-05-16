@@ -1,4 +1,6 @@
-class Person:
+from abc import  ABC
+
+class Person(ABC):
     """
     Parent class for all people records.
     Encapsulates data and then safely retrieves through @property.

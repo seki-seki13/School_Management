@@ -138,7 +138,7 @@ def grades_menu(role, pers_id):
         course_choice = validate_number('1. All Grades\n'
                                    '2. By course\n'
                                    'Choice: ', 1, 2)
-        
+
         # Exclude optional requirement if 'All'
         if course_choice == 1:
             course_choice = None
@@ -147,8 +147,6 @@ def grades_menu(role, pers_id):
         data = grade_serv.get_grades_by_role(role, pers_id, course_choice)
 
         return disp.print_grades(data)
-
-
 
 
 def find_person_ui(role):
