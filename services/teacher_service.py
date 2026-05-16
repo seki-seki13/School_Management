@@ -10,7 +10,7 @@ class TeacherService:
     Handles the execution of stored procedures related to the
     Teachers table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: full CRUD (R4).
     """
     def __init__(self):
         # Initialise the database manager for transaction handling
@@ -47,7 +47,7 @@ class TeacherService:
         return teachers
 
 
-    # Creating a new teacher with authentication (R3)
+    # Creating a new teacher with authentication (R4)
     @transaction(dictionary=False)
     def add_teacher(
             self, cursor, conn, f_name, l_name,
@@ -65,7 +65,7 @@ class TeacherService:
         cursor.callproc('add_teacher', new_teacher)
 
 
-    # Updating teacher's personal information (R3)
+    # Updating teacher's personal information (R4)
     @transaction(dictionary=False)
     def update_teacher(self, cursor, conn, t_id, f_name, l_name,
             dob, e_town, e_address, e_phone, e_email):
@@ -80,7 +80,7 @@ class TeacherService:
         cursor.callproc('update_teacher', updated)
 
 
-    # Deleting a teacher record (R3)
+    # Deleting a teacher record (R4)
     @transaction(dictionary=False)
     def delete_teacher(self, cursor, conn, t_id):
         """

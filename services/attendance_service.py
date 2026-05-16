@@ -104,7 +104,7 @@ class AttendanceService:
         return attendance
 
 
-    # Creating a new attendance record (R3)
+    # Creating a new attendance record (R4)
     @transaction(dictionary=False)
     def add_attendance(self, cursor, conn, sch_id, s_id, status):
         """

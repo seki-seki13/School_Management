@@ -9,7 +9,7 @@ class RegistrationService:
     Handles the execution of stored procedures related to the
     Registration table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: full CRUD (R4).
     """
     def __init__(self):
         # Initialise the database manager for transaction handling
@@ -76,12 +76,12 @@ class RegistrationService:
 
 
     # Creating a new registration record by registering
-    # a student to a teaching record (R3)
+    # a student to a teaching record (R4)
     @transaction(dictionary=False)
     def add_registration(self, cursor, conn, s_id, tc_id):
         """
-        Execute 'add_registration' stored procedure to add a new registration
-        record.
+        Execute 'add_registration' stored procedure to add a
+        new registration record.
         """
         # Collect parameters into a tuple for the stored procedure call
         new_reg = (s_id, tc_id)
@@ -90,7 +90,7 @@ class RegistrationService:
 
 
     # Updating a registration record
-    # by reassigning student and teaching IDs (R3)
+    # by reassigning student and teaching IDs (R4)
     @transaction(dictionary=False)
     def update_registration(self, cursor, conn, r_id, new_s_id, new_tc_id):
         """

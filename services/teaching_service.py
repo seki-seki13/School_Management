@@ -10,7 +10,7 @@ class TeachingService:
     Handles the execution of stored procedures related to the
     Teaching table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: full CRUD (R4).
     """
     def __init__(self):
         # Initialise the database manager for transaction handling
@@ -69,7 +69,7 @@ class TeachingService:
         return courses
 
 
-    # Creating a new teaching record (R3)
+    # Creating a new teaching record (R4)
     @transaction(dictionary=False)
     def add_teaching(self, cursor, conn, t_id, c_id):
         """
@@ -82,7 +82,7 @@ class TeachingService:
         cursor.callproc('add_teaching', new_teaching)
 
 
-    # Updating existing teaching record (R3)
+    # Updating existing teaching record (R4)
     @transaction(dictionary=False)
     def update_teaching(self, cursor, conn, tch_id, t_id, c_id):
         """
@@ -95,7 +95,7 @@ class TeachingService:
         cursor.callproc('update_teaching', updated)
 
 
-    # Deleting a teaching record (R3)
+    # Deleting a teaching record (R4)
     @transaction(dictionary=False)
     def delete_teaching(self, cursor, conn, tc_id):
         """

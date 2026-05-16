@@ -48,7 +48,7 @@ class AdminService:
         return admins
 
 
-    # Creating a new administrative record with authentication (R3)
+    # Creating a new administrative record with authentication (R4)
     @transaction(dictionary=False)
     def add_admin(
             self, cursor, conn, f_name, l_name,

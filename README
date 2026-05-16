@@ -1,18 +1,58 @@
-========================================================================
+=======================================================================
 
 SCHOOL MANAGEMENT SYSTEM - PROJECT README
 
-========================================================================
+=======================================================================
 
 1.  INTRODUCTION
 
-The School Management System is a comprehensive administrative tool designed to
-manage the student lifecycle, staff assignments, and institutional
-infrastructure. Built with a focus on data integrity and security, the
-application employs an Object-Oriented approach in Python, backed by a MySQL
-relational database normalised to the 3rd Normal Form (3NF).
+The School Management System is a comprehensive administrative tool
+designed to manage the student lifecycle, staff assignments, and
+institutional infrastructure. Built with a focus on data integrity and
+security, the application employs an Object-Oriented approach in
+Python, backed by a MySQL relational database normalised to the 3rd
+Normal Form (3NF).
 
-========================================================================
+=======================================================================
+
+2. ARTEFACT CODEBASE REQUIREMENT SPECIFICATION COMPLETION
+
+2.1. Required improvement to the codebase. (9/9)
+R1. Added code comments to explain the code.
+R2. Organized the code into different files/classes and folders;
+Made sure my solution is a proper Object Oriented solution including:
+Inheritance, Encapsulation, Abstraction, Single Responsibility.
+R3. Implemented a well-designed database including necessary
+constraints and 3NF tables.
+R4. CRUD functionalities were fully implemented to manage students,
+teachers, courses, teaching and registration records making the data be
+easily manipulated.
+R5. Used Merge Sort and Binary Search algorithms to filter and sort
+loaded data. The program allows searching for specific records by IDs,
+First or Last name, Date, Course.
+R6. Errors and Exceptions were handled using try-except,
+SIGNAL SQLSTATE...SET MESSAGE_TEXT...
+R7. Implemented input validation on multiple layers of the program:
+menus, models, stored procedures and tables level.
+R8. Followed PEP8 Standards.
+R9. Implemented loops providing a continuously running program until
+the user's decision to quit.
+
+2.2. Optional improvements to the codebase. (6/7)
+O1. Implemented a login feature validating username and password
+stored in Authentication table.
+O2. Added more entities and tables: Authentication, Administration,
+Person, Rooms, Room Types, Teaching, Schedule, Attendance, Grades.
+O3. Added more features and functionalities: generating student
+per course, average grade and attendance summary reports.
+O4. Improved the output by utilising a tabulate library.
+O5. Added general code improvement and refactoring
+(e.g., used match-case instead of some if-else conditions)
+O6. Implemented Authorization: Administration staff access,
+teacher access and student access.
+O7. GUI was not created
+
+=======================================================================
 
 2. PROJECT STRUCTURE
 
@@ -43,12 +83,15 @@ relational database normalised to the 3rd Normal Form (3NF).
 ---- courses_menu.py     # Courses management menu
 ---- reporting_menu.py   # Reports menu
 ---- rooms_menu.py       # Rooms management menu (Rooms, Room Types)
----- student_submenu.py  # Students management menu (Student, Registration, Grades, Attendance)
----- teacher_submenu.py  # Teachers management menu (Teacher, Teaching, Schedule)
+---- student_submenu.py  # Students management menu (Student,
+                                     Registration, Grades, Attendance)
+---- teacher_submenu.py  # Teachers management menu
+                                     (Teacher, Teaching, Schedule)
 
 
 - models        # OOP models
--- admin.py             # Admin specific attributes (Inheritance from person.py)
+-- admin.py             # Admin specific attributes
+                                           (Inheritance from person.py)
 -- attendance.py        # Attendance specific attributes
 -- authentication.py    # Login credentials and role
 -- course.py            # Course specific attributes
@@ -57,17 +100,21 @@ relational database normalised to the 3rd Normal Form (3NF).
 -- registration.py      # Students' registration specific attributes
 -- room.py              # Rooms specific attributes
 -- schedule.py          # Schedule specific attributes
--- student.py           # Student specific attributes (Inheritance from person.py)
--- teacher.py           # Teacher specific attributes (Inheritance from person.py)
+-- student.py           # Student specific attributes
+                                           (Inheritance from person.py)
+-- teacher.py           # Teacher specific attributes
+                                           (Inheritance from person.py)
 -- teaching.py          # Teacher-to-Course combination
 
 
 - services      # Database-to-Python logic via stored procedures
 -- admin_services.py             # Admin management [view, add]
 -- attendance_services.py        # Attendance management [view, add]
--- auth_services.py              # Login and authentication logic [update]
+-- auth_services.py              # Login and authentication logic
+                                                              [update]
 -- course_services.py            # Course management [full CRUD]
--- grade_services.py             # Grades management [view, add, update]
+-- grade_services.py             # Grades management
+                                                   [view, add, update]
 -- registration_services.py      # Registration management [full CRUD]
 -- room_services.py              # Rooms management [view, add]
 -- schedule_services.py          # Schedule management [view, add]
@@ -85,7 +132,7 @@ relational database normalised to the 3rd Normal Form (3NF).
 -- searching.py             # Binary Search Algorithm implementation
 -- sorting.py               # Merge Sort Algorithm implementation
 
-========================================================================
+=======================================================================
 
 3. INSTALLATION AND CONFIGURATION
 
@@ -102,7 +149,7 @@ Configuration:
 - Open 'database/connection.py' and update the __user and __password
 attributes to match your local MySQL server credentials.
 
-========================================================================
+=======================================================================
 
 4. OPERATING INSTRUCTIONS & LOGIN DETAILS
 
@@ -112,8 +159,8 @@ Initial Administrator Credentials:
 - Username: alinaadmin
 - Password: alina123456789
 
-Automated Test Credentials (Formula): For easier checking, all other accounts
-generated from the dataset use:
+Automated Test Credentials (Formula): For easier checking, all other
+accounts generated from the dataset use:
 1.  Username: Person's First Name (e.g., Aisha)
 2.  Password: First Name repeated three times (e.g., AishaAishaAisha)
 
@@ -123,12 +170,12 @@ names shorter than 5 characters (e.g., Ivy) require:
 the length is 5 (e.g., Ivyyy)
 2. Password: First Name repeated four/five times  (e.g., IvyIvyIvyIvy)
 
-========================================================================
+=======================================================================
 
 5. DATA SOURCE AND CREDITS
 
-The mock data for this system was derived from the 'Fictional People Database
-(JMD).csv' provided by the university.
+The mock data for this system was derived from the
+'Fictional People Database (JMD).csv' provided by the university.
 
 Data Processing Notes:
 - IDs: Automatically incremented by the database
@@ -140,38 +187,41 @@ Data Processing Notes:
 - Email: Utilized from the dataset without change.
 - Other columns: Discarded as they were not relevant to the schema.
 
-========================================================================
+=======================================================================
 
 6. DEVELOPMENT HISTORY
 
-1. Database Schema: Designed 3NF tables and referential integrity
-2. Stored Procedures: Elicited functionality and created stored procedures
-3. OOP models: Created models (OOP classes) and implemented inheritance,
-encapsulation and abstraction
-4. Decorators: Developed a transaction decorator as a foundation for 5th step
-5. Service layer: Connected stored procedures with models via decorators
-6. Other Utilities: Implemented Binary Search and Merge Sort algorithms;
-Utilised tabulate library for table formatting; Input validation; Reporting;
-Dynamic menu printing
-7. UI layer: Developed role-based menus portals and menus
+1. Database Schema: Designed 3NF tables and referential integrity.
+2. Stored Procedures: Elicited functionality and created stored
+procedures.
+3. OOP: Created models (OOP classes) and implemented
+inheritance, encapsulation and abstraction.
+4. Decorators: Developed a transaction decorator as a foundation
+for 5th step.
+5. Service layer: Connected stored procedures with models
+via decorators.
+6. Other Utilities: Implemented Binary Search and Merge Sort
+algorithms; Utilised tabulate library for table formatting;
+Input validation; Reporting; Dynamic menu printing.
+7. UI layer: Developed role-based menus portals and menus.
 
-========================================================================
+=======================================================================
 
 7. KNOWN BUGS
 
 Known Bugs:
 
-- Referential Integrity: Deleting a record with active links (e.g., a Teacher
-with a class) will trigger a MySQL 1451 error unless cascading is manually
-enabled in the Workbench.
+- Referential Integrity: Deleting a record with active links
+(e.g., a Teacher with a class) will trigger a MySQL 1451 error unless
+cascading is manually enabled in the Workbench.
 
-========================================================================
+=======================================================================
 
 8. IMPORTANT PROJECT NOTES
 
-- Data Utilization: While 50 students and multiple teachers/courses were
-added to the database for scale, only a subset were utilized in the
-Registration and Attendance services to verify functionality.
+- Data Utilization: While 50 students and multiple teachers/courses
+were added to the database for scale, only a subset were utilized in
+the Registration and Attendance services to verify functionality.
 
 - Password Security: Robust password format checking (regex) was
 intentionally kept basic to facilitate easier program checking by
@@ -183,7 +233,7 @@ prioritized for core assignment entities (Students, Teachers, Courses,
 Teaching, Registration). Secondary tables (like Room Types) implement
 the functional minimum required for the system to operate.
 
-========================================================================
+=======================================================================
 
 9. CONTACT INFORMATION
 

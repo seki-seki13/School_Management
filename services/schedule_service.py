@@ -107,7 +107,7 @@ class ScheduleService:
         return schedule
 
 
-    # Creating a new schedule record (R3)
+    # Creating a new schedule record (R4)
     @transaction(dictionary=False)
     def add_schedule(self, cursor, conn, tc_id, room_id, class_date):
         """

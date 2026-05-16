@@ -96,7 +96,7 @@ class GradesService:
         return grades
 
 
-    # Creating a new grade (R3)
+    # Creating a new grade (R4)
     @transaction(dictionary=False)
     def add_grade(self, cursor, conn, r_id, f_gr):
         """
@@ -107,7 +107,7 @@ class GradesService:
         cursor.callproc('add_grade', new_grade)
 
 
-    # Updating a grade value (R3)
+    # Updating a grade value (R4)
     @transaction(dictionary=False)
     def update_grade(self, cursor, conn, r_id, grade):
         """

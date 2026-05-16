@@ -61,7 +61,7 @@ class AuthService:
             return None
 
 
-    # Updating the password (R3)
+    # Updating the password (R4)
     @transaction(dictionary=False)
     def new_password(self, cursor, conn, e_username, new_pass):
         """

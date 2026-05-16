@@ -10,7 +10,7 @@ class StudentService:
     Handles the execution of stored procedures related to the
     Students table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: full CRUD (R4).
     """
     def __init__(self):
         # Initialise the database manager for transaction handling
@@ -47,7 +47,7 @@ class StudentService:
         return students
 
 
-    # Creating a new student with authentication (R3)
+    # Creating a new student with authentication (R4)
     @transaction(dictionary=True)
     def add_student(
             self, cursor, conn, f_name, l_name,
@@ -64,7 +64,7 @@ class StudentService:
         cursor.callproc('add_student', new_student)
 
 
-    # Updating student's personal information (R3)
+    # Updating student's personal information (R4)
     @transaction(dictionary=False)
     def update_student(self, cursor, conn, s_id, f_name, l_name,
             dob, e_town, e_address, e_phone, e_email):
@@ -79,7 +79,7 @@ class StudentService:
         cursor.callproc('update_student', updated)
 
 
-    # Deleting a student record (R3)
+    # Deleting a student record (R4)
     @transaction(dictionary=True)
     def delete_student(self, cursor, conn, s_id):
         """

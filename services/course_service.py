@@ -10,7 +10,7 @@ class CoursesService:
     Handles the execution of stored procedures related to the
     Courses table and maps results into the corresponding model.
 
-    CRUD: full CRUD (R3).
+    CRUD: full CRUD (R4).
     """
     def __init__(self):
         # Initialise the database manager for transaction handling
@@ -39,7 +39,7 @@ class CoursesService:
         return courses
 
 
-    # Creating a new course (R3)
+    # Creating a new course (R4)
     @transaction(dictionary=False)
     def add_course(self, cursor, conn, c_id, c_name):
         """
@@ -51,7 +51,7 @@ class CoursesService:
         cursor.callproc('add_course', new_course)
 
 
-    # Updating course name (R3)
+    # Updating course name (R4)
     @transaction(dictionary=False)
     def update_course(self, cursor, conn, c_id, c_name):
         """
@@ -63,7 +63,7 @@ class CoursesService:
         cursor.callproc('update_course', updated)
 
 
-    #  Deleting a course (R3)
+    #  Deleting a course (R4)
     @transaction(dictionary=False)
     def delete_course(self, cursor, conn, c_id):
         """

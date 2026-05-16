@@ -67,7 +67,7 @@ class RoomService:
         return rooms
 
 
-    # Creating a new room type (R3)
+    # Creating a new room type (R4)
     @transaction(dictionary=False)
     def add_room_type(self, cursor, conn, t_name):
         """
@@ -77,7 +77,7 @@ class RoomService:
         cursor.callproc('add_room_type', (t_name,))
 
 
-    # Creating a new classroom (R3)
+    # Creating a new classroom (R4)
     @transaction(dictionary=False)
     def add_room(self, cursor, conn, room_label,
                  floor, capacity, type_id):
