@@ -84,7 +84,9 @@ def get_pers_data():
             except ValueError:
                 print('[!] Invalid date format. Use YYYY-MM-DD.')
 
-        t = validate_input('Town (Default Astana): ')
+        t = input('Town (Default Astana): ')
+        if not t:
+            t = 'Astana'
         a = validate_input('Address: ')
 
         # Phone Validation
@@ -94,7 +96,7 @@ def get_pers_data():
                                      '+7 followed by 10 digits.')
 
         # Email Validation
-        e = validate_input('Email: ',
+        e = validate_input('Email (name@domain.com): ',
                            pattern=r'^[\w\.-]+@[\w\.-]+\.\w+$',
                            error_msg='Invalid email format '
                                      '(e.g., name@domain.com).')

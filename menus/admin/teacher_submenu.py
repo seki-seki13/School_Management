@@ -15,6 +15,7 @@ from utilities.input_validation import (get_pers_data, validate_number,
 # Importing submenus
 from menus.admin.courses_menu import course_serv
 from menus.admin.rooms_menu import room_serv
+from menus.shared_menu_options import find_person_ui
 
 # Initialising utility and service instances
 disp = DisplayUtils()
@@ -78,17 +79,7 @@ def teacher_management():
                     disp.print_teachers(data)
 
                 case 3:  # Find (Binary Search)
-                    # Load data into memory
-                    data = teacher_serv.view_all_teachers()
-                    t_id = validate_number('Enter Teacher ID to find: ')
-
-                    # Utilise Binary Search
-                    found = searcher.binary_search(
-                        data, t_id, 'teacher_id')
-                    if found:
-                        disp.print_teachers([found])
-                    else:
-                        print('[!] Teacher not found.')
+                    find_person_ui('Teacher')
 
                 case 4:  # Add
                     print('--- Adding Teacher ---')
@@ -115,6 +106,7 @@ def teacher_management():
                     found = searcher.binary_search(
                         data, t_id, 'teacher_id')
                     if found:
+                        disp.print_teachers([found])
                         # Collect validated personal details
                         f, l, d, t, a, p, e = get_pers_data()
 
@@ -165,12 +157,19 @@ def teaching_management():
                     data = teaching_serv.view_teaching_records()
                     disp.print_teaching(data)
 
-                case 3:  # Find Course by Teacher (Stored Procedure)
-                    disp.print_teaching(
-                        teaching_serv.view_teaching_records())
+                case 3:  # Find Course by Teacher
+                    # (Stored Procedure + Binary Search)
+                    data_teachers = teacher_serv.view_all_teachers()
+                    disp.print_teachers(data_teachers)
                     t_id = validate_number('Enter Teacher ID to find: ')
-                    data = teaching_serv.get_my_courses(t_id)
-                    disp.print_courses(data)
+                    data_teaching = teaching_serv.get_my_courses(t_id)
+                    found = searcher.binary_search(
+                        data_teachers, t_id, 'teacher_id')
+                    if found:
+                        disp.print_teachers([found])
+                    else:
+                        print('[!] Teacher not found.')
+                    disp.print_courses(data_teaching)
 
 
                 case 4:  # Add

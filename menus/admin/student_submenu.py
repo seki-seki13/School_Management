@@ -5,8 +5,9 @@ from services.grade_service import GradesService
 from services.attendance_service import AttendanceService
 from services.schedule_service import ScheduleService
 
-# Importing shared teaching service instance
+# Importing shared instances and functions
 from menus.admin.teacher_submenu import teaching_serv
+from menus.shared_menu_options import find_person_ui
 
 # Utilities imports: displaying, searching, input validation
 from utilities.displaying import DisplayUtils
@@ -80,17 +81,7 @@ def student_management():
                     disp.print_students(data)
 
                 case 3:  # Find (Binary Search)
-                    # Load data into memory
-                    data = student_serv.view_all_students()
-                    s_id = validate_number('Enter Student ID to find: ')
-
-                    # Utilise Binary Search
-                    found = searcher.binary_search(
-                        data, s_id, 'student_id')
-                    if found:
-                        disp.print_students([found])
-                    else:
-                        print('[!] Student not found.')
+                    find_person_ui('Student')
 
                 case 4:  # Add
                     print('--- Adding Student ---')
@@ -193,8 +184,9 @@ def registration_management():
                 case 5: # Update
                     r_id = validate_number('Enter ID to Update: ')
                     # Found if ID exists with a stored procedure
-                    found = (registration_serv.
-                             find_registration_by_student(r_id))
+                    data = registration_serv.view_registration()
+                    found = searcher.binary_search(
+                        data, r_id, 'reg_id')
 
                     if found:
                         # Display registration, students, teaching

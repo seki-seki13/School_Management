@@ -27,7 +27,7 @@ END //
 
 CREATE PROCEDURE `f_course_by_teacher`
 (
-IN your_pers_id INT
+IN your_id INT
 )
 BEGIN
     SELECT
@@ -36,7 +36,7 @@ BEGIN
     FROM Teaching tch
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
     JOIN Courses c ON tch.course_id = c.course_id
-    WHERE t.pers_id = your_pers_id;
+    WHERE t.pers_id = your_id;
 END //
 -----------------------
 

@@ -126,20 +126,74 @@ def schedule_menu(role, pers_id):
 def grades_menu(role, pers_id):
     """
     Retrieve and display attendance according to the current user.
-    Provides filtering options: full grades list or by course.
+    Provides filtering options:
+    Student: full grades list;
+    Teacher: full grades list or by course.
     """
-    course_choice = validate_number('1. All Grades\n'
-                                   '2. By course\n'
-                                   'Choice: ', 1, 2)
-    # Exclude optional requirement if 'All'
-    if course_choice == 1:
-        course_choice = None
-    else:
-        course_choice = course_valid('Enter Course ID: ')
-    data = grade_serv.get_grades_by_role(role, pers_id, course_choice)
-
     # Role check
     if role == 'Student':
+        data = grade_serv.get_grades_by_role(role, pers_id)
         return disp.print_grades_for_student(data)
-    else: # Teacher
+    else:  # Teacher
+        course_choice = validate_number('1. All Grades\n'
+                                   '2. By course\n'
+                                   'Choice: ', 1, 2)
+        
+        # Exclude optional requirement if 'All'
+        if course_choice == 1:
+            course_choice = None
+        else:
+            course_choice = course_valid('Enter Course ID: ')
+        data = grade_serv.get_grades_by_role(role, pers_id, course_choice)
+
         return disp.print_grades(data)
+
+
+
+
+def find_person_ui(role):
+    """
+    Generic UI for finding a person (Student, Teacher, or Admin).
+    Demonstrates search algorithms on loaded data (R5).
+    """
+    # 1. Get search criteria from user
+    print(f'\n--- Find {role} ---')
+    print('1. By ID\n2. By First Name\n3. By Last Name\n4. Go Back')
+    choice = validate_number('Choice: ', 1, 4)
+
+    if choice == 4:
+        return
+
+    # 2. Map choice to the correct model attribute
+    attr_map = {
+        1: f'{role.lower()}_id',
+        2: 'first_name',
+        3: 'last_name'
+    }
+    target_attr = attr_map[choice]
+
+    # 3. Get the target value from the user
+    target_val = input(f'Enter {target_attr.replace("_", " ")}: ').strip()
+
+    # 4. Fetch data using the appropriate service
+    if role == 'Student':
+        data = student_serv.view_all_students()
+    elif role == 'Teacher':
+        data = teacher_serv.view_all_teachers()
+    else:
+        data = admin_serv.view_all_admins()
+
+    # 5. Execute Binary Search
+    found = searcher.binary_search(data, target_val, target_attr)
+
+    # 6. Display results
+    if found:
+        if role == 'Student':
+            disp.print_students([found])
+        elif role == 'Teacher':
+            disp.print_teachers([found])
+        else:
+            disp.print_admins([found])
+    else:
+        print(f'[!] No {role} found with '
+              f'{target_attr.replace("_", " ")}: {target_val}')

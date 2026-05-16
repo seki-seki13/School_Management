@@ -7,6 +7,9 @@ from utilities.input_validation import get_pers_data, validate_number
 # Importing service layer for administrative database operations
 from services.admin_services import AdminService
 
+# Importing a shared menu option
+from menus.shared_menu_options import find_person_ui
+
 # Initialising service and utility instances for global use in this module
 admin_serv = AdminService()
 disp = DisplayUtils()
@@ -42,18 +45,7 @@ def run_admin_menu():
                     disp.print_admins(data)
 
                 case 3:  # Find (Binary Search)
-                    # Load data into memory
-                    data = admin_serv.view_all_admins()
-                    a_id = validate_number('Enter Admin ID to find: ')
-
-                    # Utilise Binary Search
-                    found = searcher.binary_search(
-                        data, a_id, 'admin_id')
-
-                    if found:
-                        disp.print_admins([found])
-                    else:
-                        print('[!] Admin not found.')
+                    find_person_ui('Admin')
 
                 case 4:  # Add
                     print('--- Adding Admin ---')
