@@ -65,17 +65,22 @@ class StudentService:
 
 
     # Updating student's personal information (R4)
+    # @transaction decorator handles connection, cursor,
+    # commit/rollback automatically — keeps method clean
     @transaction(dictionary=False)
     def update_student(self, cursor, conn, s_id, f_name, l_name,
-            dob, e_town, e_address, e_phone, e_email):
+                       dob, e_town, e_address, e_phone, e_email):
         """
-        Execute 'update_student' stored procedure to
-        update an existing student's data.
+        Calls 'update_student' stored procedure to update
+        an existing student record in the database.
+        cursor and conn are injected by the @transaction decorator.
         """
-        # Collect parameters into a tuple for the stored procedure call
+        # Pack all update parameters into a tuple
+        # Tuples are immutable — safe to pass as procedure arguments
         updated = (s_id, f_name, l_name,
-            dob, e_town, e_address, e_phone, e_email)
+                   dob, e_town, e_address, e_phone, e_email)
 
+        # Execute the stored procedure with the parameter tuple
         cursor.callproc('update_student', updated)
 
 

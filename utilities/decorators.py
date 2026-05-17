@@ -11,22 +11,24 @@ def transaction(dictionary=True):
     stored procedures and services layer
     """
     def decorator(func):
-        # Preserving the original function's data for debugging
+        # @wraps preserves the original function's __name__ and __doc__
+        # Essential for debugging — without it all methods look the sam
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             # Initialise a connection object
             conn = self.database_manager.connect()
 
-            if not conn: # Failed to connect
+            if not conn: # Failed to connect: stop execution
                 return None
 
             # Initialise a cursor object for database interactions
-            # dictionary=True allows for mapping results to
-            # Python objects via keys
+            # dictionary=True: rows returned as {column: value} dicts
+            # dictionary=False: rows returned as plain tuples
             cursor = conn.cursor(dictionary=dictionary)
 
             try:
-                # A general pattern for all services methods execution
+                # Inject cursor and conn into the wrapped service method
+                # The method itself only contains the procedure calling
                 result = func(self, cursor, conn, *args, **kwargs)
 
                 # Commit if successful
@@ -35,7 +37,7 @@ def transaction(dictionary=True):
 
             # Error handling and data integrity
             except Error as e:
-                # Cancel the failed action for preserving
+                # Cancel the failed action by undoing all changes
                 conn.rollback()
                 print(f'Database transaction error: {e}')
                 return None

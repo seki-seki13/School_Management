@@ -30,22 +30,27 @@ def main():
             session = auth.login(username, password)
 
             if session:
-                # Role-based authorisation routes to the correct menu
+                # session is truthy only if login() returned a valid session object
+                # Nested if/elif/else checks the role attribute to route the user
                 if session.role == 'Student':
+                    # Student role: redirect to student-only portal
                     print('Loading Student Menu...')
-                    run_stud_menu(session)
+                    run_stud_menu(session)  # Pass session to carry user context
                 elif session.role == 'Teacher':
+                    # Teacher role: redirect to teacher-only portal
                     print('Loading Teacher Menu...')
                     run_teach_menu(session)
                 elif session.role == 'Admin':
+                    # Admin role: full system access portal
                     print('Loading Admin Menu...')
                     run_admin(session)
             else:
-                # Failed login handling
+                # session is None/False — authentication failed
                 ask_again = input('\nLogin failed.\nTry again?(y/n): ')
+                # Convert to lowercase to accept both 'Y' and 'y'
                 if ask_again.lower() != 'y':
                     print('Program exited.')
-                    sys.exit()
+                    sys.exit()  # Terminate the program cleanly
 
         # Exceptions handling
         except KeyboardInterrupt:

@@ -7,30 +7,36 @@ An input validation Utility (R7).
 Ensures data integrity and valid input at the application layer.
 """
 
+
 def validate_input(prompt, pattern=None, error_msg="Invalid input."):
     """
-    Generic function to validate string-based user input.
-    :param prompt: The message displayed to the user.
-    :param pattern: Optional regex pattern for strict format matching.
-    :param error_msg: Feedback provided if the pattern match fails.
-    :return: The validated string
+    Generic reusable input validator for all string-based fields.
+    :param prompt: Message displayed to the user
+    :param pattern: Optional regex pattern for format enforcement
+    :param error_msg: Feedback shown when pattern match fails
+    :return: The validated and stripped string value
     """
+    # Infinite loop keeps prompting until valid input is received
     while True:
-        val = input(prompt).strip()
-        # Allow user to abort the process,
-        # raising an exception for the menu to catch
-        if val.lower() == 'cancel': raise Exception('User canceled entry')
+        val = input(prompt).strip()  # strip() removes accidental whitespace
 
-        # Ensure mandatory fields are not left empty
+        # 'cancel' keyword allows graceful exit mid-entry
+        # Raises an exception caught by the calling menu
+        if val.lower() == 'cancel':
+            raise Exception('User canceled entry')
+
+        # Empty string check — all fields are mandatory
         if not val:
             print('[!] This field cannot be empty.')
-            continue
+            continue  # Skip remaining checks, re-prompt
 
-        # Check against regex pattern if provided (e.g., Email or Phone)
+        # Regex match only applied when a pattern is specified
+        # (e.g., phone: ^\+7\d{10}$, email: standard format)
         if pattern and not re.match(pattern, val):
             print(f'[!] {error_msg}')
-            continue
-        return val
+            continue  # Pattern failed — re-prompt without returning
+
+        return val  # All checks passed — return clean value
 
 
 def validate_number(prompt, min_val=None, max_val=None):

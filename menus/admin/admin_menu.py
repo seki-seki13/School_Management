@@ -36,35 +36,39 @@ def run_admin_menu():
             if choice == len(actions) + 1:
                 break
 
-            # Identify the specific action ID based on user selection
+            # Map user's menu index back to the actual action ID
+            # (e.g., choice 1 → actions[0] which may be action ID 3)
             actual_action = actions[choice - 1]
 
+            # match-case (Python 3.10+) replaces chained if/elif for clarity
             match actual_action:
-                case 1:  # View All
+                case 1:  # View All — display every admin record
                     data = admin_serv.view_all_admins()
                     disp.print_admins(data)
 
-                case 3:  # Find (Binary Search)
+                case 3:  # Find — triggers Binary Search via UI helper
                     find_person_ui('Admin')
 
-                case 4:  # Add
+                case 4:  # Add — multi-step data collection flow
                     print('--- Adding Admin ---')
 
-                    # Collect validated personal details
+                    # Collect and validate personal details via shared helper
                     f, l, d, t, a, p, e = get_pers_data()
 
                     print('--- Login Details ---')
 
+                    # Loop until valid credentials are provided
                     while True:
                         try:
                             un = input('Username(>5): ')
                             pw = input('Password(>12): ')
 
-                            # Pass input to the service
+                            # Service layer validates and writes to DB
                             admin_serv.add_admin(f, l, d, t, a, p, e, un, pw)
-                            break
+                            break  # Exit loop only on success
 
                         except Exception as e:
+                            # Validation error from service/DB layer — retry
                             print(f'[!] Invalid Login: {e}')
 
         # Unexpected errors handled with try-except
