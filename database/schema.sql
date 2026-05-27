@@ -8,7 +8,9 @@
 -----------------------------------------------
 
 -- Create and initialise the database
-CREATE DATABASE IF NOT EXISTS School_Management_System;
+CREATE DATABASE
+IF NOT EXISTS School_Management_System;
+
 USE School_Management_System;
 
 -----------------------------------------------
@@ -95,7 +97,7 @@ FOREIGN KEY (pers_id) REFERENCES People(pers_id) ON DELETE CASCADE
 );
 
 -----------------------------------------------
--- STDUENTS: A table for students
+-- STUDENTS: A table for students
 -- FK pers_id references People table
 CREATE TABLE Students (
 stud_id INT PRIMARY KEY AUTO_INCREMENT,

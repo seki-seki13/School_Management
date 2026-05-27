@@ -95,6 +95,33 @@ class GradesService:
                     grades.append(gr)
         return grades
 
+        # Getting registration records based on the teacher for grading
+
+    @transaction(dictionary=True)
+    def f_reg_for_grade(self, cursor, conn, p_id):
+        """
+        Execute 'f_reg_for_grade' stored procedure to find registration
+        records for teachers in order to add grades later
+        """
+        cursor.callproc('f_reg_for_grade', (p_id,))
+        records = []
+        # Iterate through the stored procedure results
+        for result in cursor.stored_results():
+            rows = result.fetchall()
+            for row in rows:
+                # Instantiating the model
+                reg = Grade(
+                    grade_id=None,
+                    reg_id=row['registration_ID'],
+                    student_first_name=row['student_first_name'],
+                    student_last_name=row['student_last_name'],
+                    course_name=row['course_name'],
+                    course_id=row['course_id'],
+                    final_grade=row['final_grade']
+                )
+                records.append(reg)
+        return records
+
 
     # Creating a new grade (R4)
     @transaction(dictionary=False)

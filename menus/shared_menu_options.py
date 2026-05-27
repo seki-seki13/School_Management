@@ -6,10 +6,12 @@ from services.schedule_service import ScheduleService
 from services.teacher_service import TeacherService
 from services.admin_services import AdminService
 from services.grade_service import GradesService
+from services.registration_service import RegistrationService
 
 # Utilities imports for validation, searching and displaying
 from utilities.input_validation import (validate_number, validate_input,
-                                        date_class_validator, course_valid)
+                                        date_class_validator, course_valid,
+                                        grade_valid)
 from utilities.searching import SearchUtils
 from utilities.displaying import DisplayUtils
 
@@ -21,6 +23,7 @@ schedule_serv = ScheduleService()
 teacher_serv = TeacherService()
 admin_serv = AdminService()
 grade_serv = GradesService()
+reg_serv = RegistrationService()
 
 searcher = SearchUtils()
 disp = DisplayUtils()
@@ -102,7 +105,7 @@ def attendance_menu(role, pers_id):
 
 def schedule_menu(role, pers_id):
     """
-    Retrieve and display attendance according to the current user.
+    Retrieve and display schedule according to the current user.
     Provides filtering options: full schedule or by date.
     """
     date = validate_number('1. All Schedule\n'
@@ -121,32 +124,6 @@ def schedule_menu(role, pers_id):
         return disp.print_schedule(data)
     else: # Teacher
         return disp.print_schedule_for_teacher(data)
-
-
-def grades_menu(role, pers_id):
-    """
-    Retrieve and display attendance according to the current user.
-    Provides filtering options:
-    Student: full grades list;
-    Teacher: full grades list or by course.
-    """
-    # Role check
-    if role == 'Student':
-        data = grade_serv.get_grades_by_role(role, pers_id)
-        return disp.print_grades_for_student(data)
-    else:  # Teacher
-        course_choice = validate_number('1. All Grades\n'
-                                   '2. By course\n'
-                                   'Choice: ', 1, 2)
-
-        # Exclude optional requirement if 'All'
-        if course_choice == 1:
-            course_choice = None
-        else:
-            course_choice = course_valid('Enter Course ID: ')
-        data = grade_serv.get_grades_by_role(role, pers_id, course_choice)
-
-        return disp.print_grades(data)
 
 
 def find_person_ui(role):

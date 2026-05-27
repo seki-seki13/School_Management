@@ -47,12 +47,12 @@ class TeachingService:
     # and sorting the loaded data by course name (R5)
     @sorted_by('course_name')
     @transaction(dictionary=True)
-    def get_my_courses(self, cursor, conn, pers_id):
+    def get_my_courses(self, cursor, conn, teacher_id=None, pers_id=None):
         """
         Executes 'f_course_by_teacher' stored procedure to find courses
         taught by a specific teacher.
         """
-        cursor.callproc('f_course_by_teacher', (pers_id,))
+        cursor.callproc('f_course_by_teacher', (pers_id, teacher_id))
         courses = []
 
         # Iterate through the stored procedure results
@@ -62,6 +62,8 @@ class TeachingService:
                 crs = Teaching(
                     teach_course_id=row['teaching_ID'],
                     teacher_id=None,
+                    first_name=row['first_name'],
+                    last_name=row['last_name'],
                     course_id=row['course_id'],
                     course_name=row['course_name']
                 )
@@ -70,7 +72,7 @@ class TeachingService:
 
 
     # Creating a new teaching record (R4)
-    @transaction(dictionary=False)
+    @transaction(dictionary=False) # not a dictionary but a tuple
     def add_teaching(self, cursor, conn, t_id, c_id):
         """
         Execute 'add_teaching' stored procedure to add a new
@@ -83,7 +85,7 @@ class TeachingService:
 
 
     # Updating existing teaching record (R4)
-    @transaction(dictionary=False)
+    @transaction(dictionary=False) # not a dictionary but a tuple
     def update_teaching(self, cursor, conn, tch_id, t_id, c_id):
         """
         Execute 'update_teaching' stored procedure to update the
@@ -96,7 +98,7 @@ class TeachingService:
 
 
     # Deleting a teaching record (R4)
-    @transaction(dictionary=False)
+    @transaction(dictionary=False) # not a dictionary but a tuple
     def delete_teaching(self, cursor, conn, tc_id):
         """
         Execute 'delete_teaching' stored procedure to delete a teaching

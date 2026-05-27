@@ -30,12 +30,16 @@ def main():
             session = auth.login(username, password)
 
             if session:
-                # session is truthy only if login() returned a valid session object
-                # Nested if/elif/else checks the role attribute to route the user
+                # session is truthy only if login() returned a valid
+                # session object
+                # Nested if/elif/else checks the role attribute
+                # to route the user
                 if session.role == 'Student':
                     # Student role: redirect to student-only portal
                     print('Loading Student Menu...')
-                    run_stud_menu(session)  # Pass session to carry user context
+
+                    # Pass session to carry user context
+                    run_stud_menu(session)
                 elif session.role == 'Teacher':
                     # Teacher role: redirect to teacher-only portal
                     print('Loading Teacher Menu...')

@@ -40,7 +40,7 @@ def run_admin_menu():
             # (e.g., choice 1 → actions[0] which may be action ID 3)
             actual_action = actions[choice - 1]
 
-            # match-case (Python 3.10+) replaces chained if/elif for clarity
+            # match-case replaces chained if/elif for clarity
             match actual_action:
                 case 1:  # View All — display every admin record
                     data = admin_serv.view_all_admins()
@@ -52,7 +52,8 @@ def run_admin_menu():
                 case 4:  # Add — multi-step data collection flow
                     print('--- Adding Admin ---')
 
-                    # Collect and validate personal details via shared helper
+                    # Collect and validate personal details
+                    # via shared helper
                     f, l, d, t, a, p, e = get_pers_data()
 
                     print('--- Login Details ---')
@@ -64,11 +65,12 @@ def run_admin_menu():
                             pw = input('Password(>12): ')
 
                             # Service layer validates and writes to DB
-                            admin_serv.add_admin(f, l, d, t, a, p, e, un, pw)
+                            admin_serv.add_admin(
+                                f, l, d, t, a, p, e, un, pw)
                             break  # Exit loop only on success
 
                         except Exception as e:
-                            # Validation error from service/DB layer — retry
+                            # Validation error - retry
                             print(f'[!] Invalid Login: {e}')
 
         # Unexpected errors handled with try-except

@@ -143,10 +143,13 @@ IN tc_id INT
 BEGIN
     -- check before assigning students to teaching combinations
     IF NOT EXISTS (SELECT 1 FROM Students WHERE stud_id = s_id) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Student ID not found.';
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Student ID not found.';
 
-    ELSEIF NOT EXISTS (SELECT 1 FROM Teaching WHERE teach_course_id = tc_id) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Teaching assignment ID not found.';
+    ELSEIF NOT EXISTS
+    (SELECT 1 FROM Teaching WHERE teach_course_id = tc_id) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Teaching assignment ID not found.';
     ELSE
         INSERT INTO Registration (stud_id, teach_course_id)
         VALUES (s_id, tc_id);
@@ -161,11 +164,15 @@ IN class_date DATE
 )
 BEGIN
     -- check before assigning teaching combinations to rooms
-    IF NOT EXISTS (SELECT 1 FROM Teaching WHERE teach_course_id = tc_id) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Teaching ID not found.';
+    IF NOT EXISTS
+    (SELECT 1 FROM Teaching WHERE teach_course_id = tc_id) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Teaching ID not found.';
 
-    ELSEIF NOT EXISTS (SELECT 1 FROM Rooms WHERE room_id = room_id) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Room ID not found.';
+    ELSEIF NOT EXISTS
+    (SELECT 1 FROM Rooms WHERE room_id = room_id) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Room ID not found.';
     ELSE
         INSERT INTO Schedule (teach_course_id, room_id, date_class)
         VALUES (tc_id, room_id, class_date);
@@ -194,7 +201,8 @@ BEGIN
         VALUES (sch_id, s_id, a_status);
     ELSE
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: Student is not registered for this course.';
+        SET MESSAGE_TEXT =
+        'Error: Student is not registered for this course.';
     END IF;
 END //
 -----------------------
@@ -206,7 +214,8 @@ IN f_gr DECIMAL(6,2)
 BEGIN
     -- check before assigning grades to students (registration records)
     IF NOT EXISTS (SELECT 1 FROM Registration WHERE reg_id = r_id) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Registration ID not found.';
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Registration ID not found.';
     ELSE
         INSERT INTO Grades (reg_id, final_grade) VALUES (r_id, f_gr);
     END IF;

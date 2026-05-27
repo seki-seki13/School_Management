@@ -4,15 +4,15 @@ class Person(ABC):
     """
     Abstract parent class for all people in the system.
     Cannot be instantiated directly — must be subclassed.
-    Encapsulates all personal data behind private attributes.
+    Encapsulates all personal data with private attributes.
     """
     def __init__(self, pers_id, f_name, l_name, dob,
                  town, address, phone, email):
-        # Private attributes (name-mangled with __) enforce encapsulation
+        # Private attributes (__name) enforce encapsulation
         # Cannot be accessed directly from outside the class
         self.__pers_id = pers_id
 
-        # Validation at model level — extra reliability layer (R-C1)
+        # Validation at model level - extra reliability layer
         if not f_name:
             raise ValueError('First name required')
         self.__f_name = f_name

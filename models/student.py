@@ -16,3 +16,6 @@ class Student(Person):
     @property
     def student_id(self):
         return self.__stud_id
+
+
+

@@ -27,7 +27,8 @@ END //
 
 CREATE PROCEDURE `f_course_by_teacher`
 (
-IN your_id INT
+IN your_id INT,
+IN t_id INT
 )
 BEGIN
     SELECT
@@ -36,7 +37,9 @@ BEGIN
     FROM Teaching tch
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
     JOIN Courses c ON tch.course_id = c.course_id
-    WHERE t.pers_id = your_id;
+    JOIN People p ON t.pers_id = p.pers_id
+    WHERE (t.teacher_id = t_id  AND your_id IS NULL)
+    OR (p.pers_id = your_id AND t_id IS NULL);
 END //
 -----------------------
 
@@ -61,6 +64,29 @@ BEGIN
     JOIN Teachers t ON tch.teacher_id = t.teacher_id
     JOIN People pt ON t.pers_id = pt.pers_id
     WHERE s.stud_id = entered_stud_id OR entered_stud_id IS NULL;
+END //
+-----------------------
+
+CREATE PROCEDURE `f_reg_for_grade`
+(
+IN p_id INT
+)
+BEGIN
+	SELECT
+		g.reg_id AS registration_ID,
+        tch.course_id,
+        c.course_name,
+        p.first_name AS student_first_name,
+        p.last_name AS student_last_name,
+        g.final_grade
+    FROM Grades g
+    JOIN Registration r ON g.reg_id = r.reg_id
+    JOIN Teaching tch ON r.teach_course_id = tch.teach_course_id
+    JOIN Teachers t ON tch.teacher_id = t.teacher_id
+    JOIN Courses c ON tch.course_id = c.course_id
+    JOIN Students s ON r.stud_id = s.stud_id
+    JOIN People p on s.pers_id = p.pers_id
+    WHERE t.pers_id = p_id;
 END //
 -----------------------
 

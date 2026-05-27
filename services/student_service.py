@@ -16,9 +16,10 @@ class StudentService:
         # Initialise the database manager for transaction handling
         self.database_manager = DatabaseConnection()
 
+    # Stacked decorators: 1. @transaction, 2. @sorted_by
     # Sorting the loaded data by last name (R5)
     @sorted_by('last_name')
-    @transaction(dictionary=True)
+    @transaction(dictionary=True) # rows as {key: value}
     def view_all_students(self, cursor, conn):
         """
         Execute 'v_students' stored procedure to get all students
@@ -43,12 +44,12 @@ class StudentService:
                     phone=row['phone'],
                     email=row['email']
                 )
-                students.append(stud)
+                students.append(stud) # Build list of model objects
         return students
 
 
     # Creating a new student with authentication (R4)
-    @transaction(dictionary=True)
+    @transaction(dictionary=False)
     def add_student(
             self, cursor, conn, f_name, l_name,
             dob, e_town, e_address, e_phone, e_email,

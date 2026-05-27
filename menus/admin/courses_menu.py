@@ -84,6 +84,7 @@ def run_courses_menu():
                         print('Deletion Canceled')
                     else:
                         course_serv.delete_course(target)
+                        print('Course deleted')
 
         # Unexpected errors handled with try-except
         except Exception as e:

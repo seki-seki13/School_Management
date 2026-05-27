@@ -125,6 +125,7 @@ def teacher_management():
                         print('Deletion Canceled')
                     else:
                         teacher_serv.delete_teacher(target)
+                        print('Teacher deleted')
 
         # Unexpected errors handled with try-except
         except Exception as e:
@@ -162,14 +163,15 @@ def teaching_management():
                     data_teachers = teacher_serv.view_all_teachers()
                     disp.print_teachers(data_teachers)
                     t_id = validate_number('Enter Teacher ID to find: ')
-                    data_teaching = teaching_serv.get_my_courses(t_id)
+
+                    data_teaching = teaching_serv.get_my_courses(teacher_id=t_id)
                     found = searcher.binary_search(
                         data_teachers, t_id, 'teacher_id')
                     if found:
-                        disp.print_teachers([found])
+                        disp.print_teaching(data_teaching)
                     else:
                         print('[!] Teacher not found.')
-                    disp.print_courses(data_teaching)
+
 
 
                 case 4:  # Add
@@ -210,6 +212,7 @@ def teaching_management():
                         print('Deletion Canceled')
                     else:
                         teaching_serv.delete_teaching(target)
+                        print('Teaching deleted')
 
         # Unexpected errors handled with try-except
         except Exception as e:

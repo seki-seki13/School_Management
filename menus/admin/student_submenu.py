@@ -123,6 +123,7 @@ def student_management():
                         print('Deletion Canceled')
                     else:
                         student_serv.delete_student(target)
+                        print('Student deleted')
 
         # Unexpected errors handled with try-except
         except Exception as e:
@@ -205,14 +206,20 @@ def registration_management():
                         print('[!] Registration not found.')
 
                 case 6: # Delete
+                    data = registration_serv.view_registration()
                     target = validate_number('Enter ID to Delete: ')
-
-                    # Confirm deletion to prevent accidental cases
-                    confirm = input(f'Confirm delete ID {target}?(y/n)')
-                    if confirm.lower() != 'y':
-                        print('Deletion Canceled')
+                    found = searcher.binary_search(
+                        data, target, 'reg_id')
+                    if found:
+                        # Confirm deletion to prevent accidental cases
+                        confirm = input(f'Confirm delete ID {target}?(y/n)')
+                        if confirm.lower() != 'y':
+                            print('Deletion Canceled')
+                        else:
+                            registration_serv.delete_registration(target)
+                            print('Registration deleted')
                     else:
-                        registration_serv.delete_registration(target)
+                        print('[!] Registration not found')
 
         # Unexpected errors handled with try-except
         except Exception as e:
@@ -304,11 +311,17 @@ def grades_management():
 
                 case 5: # Update
                     # Display existing grades
-                    disp.print_grades(grade_serv.view_grades())
+                    data = grade_serv.view_grades()
+                    disp.print_grades(data)
 
-                    r = validate_number('Registration ID to Update: ')
-                    g = grade_valid()
-                    grade_serv.update_grade(r, g)
+                    f = validate_number('Registration ID to Update grade: ')
+                    found = searcher.binary_search(data, f, 'reg_id')
+                    if found:
+                        g = grade_valid()
+                        grade_serv.update_grade(f, g)
+                    else:
+                        print('[!] Graded registration not found')
+
 
         # Unexpected errors handled with try-except
         except Exception as e:

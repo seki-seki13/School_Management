@@ -147,13 +147,26 @@ def grade_valid():
     Enforces academic grade constraints (0.0 to 100.0).
     Implements float conversion with exception handling (R6).
     """
+    # Loop re-prompts until a valid grade is entered or user cancels
     while True:
         g_val = input('Final Grade (0-100): ').strip()
-        if g_val.lower() == 'cancel': return None
+
+        # 'cancel' keyword allows graceful mid-entry exit
+        if g_val.lower() == 'cancel':
+            return None
+
         try:
+            # Attempt to convert string input to float
+            # Raises ValueError automatically if conversion fails
             g = float(g_val)
+
+            # Range check — valid academic grade boundary
             if 0 <= g <= 100:
-                return g
+                return g  # Valid input - exit the loop
+
             print('[!] Grade must be between 0 and 100.')
+            # No 'return' here so the loop continues
+
         except ValueError:
+            # Catches non-numeric input (e.g. "abc", "12.3.4")
             print('[!] Please enter a valid decimal number.')

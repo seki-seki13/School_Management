@@ -12,7 +12,6 @@ class RoomType:
 
         self.__type_name = type_name
 
-
     # Allow safe and secure data retrieval
     @property
     def type_id(self):
@@ -45,7 +44,6 @@ class Room(RoomType):
             raise ValueError('Capacity must be positive')
         self.__capacity = capacity
 
-
     # Allow safe and secure data retrieval
     @property
     def room_id(self):
@@ -54,6 +52,8 @@ class Room(RoomType):
     @property
     def room_label(self):
         return self.__room_label
+
+    # ... remaining properties follow the same pattern
 
     @property
     def floor(self):

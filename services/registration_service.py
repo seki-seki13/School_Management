@@ -69,6 +69,7 @@ class RegistrationService:
                     teacher_first_name=row['teacher_first_name'],
                     teacher_last_name=row['teacher_last_name'],
                     course_name=row['course_name'],
+                    course_id=None,
                     reg_date=row['reg_date']
                 )
                 records.append(reg)

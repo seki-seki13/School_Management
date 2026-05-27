@@ -22,3 +22,4 @@ def print_crud_options(entity, number_list):
     # Go Back is always appended as the last option
     # len() + 1 ensures it follows the last numbered action
     print(f"{len(number_list) + 1}. Go Back")
+

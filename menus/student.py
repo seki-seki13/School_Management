@@ -1,7 +1,9 @@
 # Importing validation utilities and common menu options
 from utilities.input_validation import validate_number
 from menus.shared_menu_options import (profile_info, attendance_menu,
-                                       schedule_menu, grades_menu)
+                                       schedule_menu)
+from services.grade_service import GradesService
+from utilities.displaying import DisplayUtils
 
 
 def run_stud_menu(session):
@@ -43,7 +45,10 @@ def run_stud_menu(session):
                 schedule_menu(session.role, session.pers_id)
 
             elif action == 2:
-                grades_menu(session.role, session.pers_id)
+                grade_serv = GradesService()
+                disp = DisplayUtils()
+                data = grade_serv.get_grades_by_role(session.role, session.pers_id)
+                disp.print_grades_for_student(data)
 
             elif action == 3:
                 attendance_menu(session.role, session.pers_id)

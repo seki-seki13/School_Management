@@ -44,7 +44,7 @@ class AdminService:
                     phone=row['phone'],
                     email=row['email']
                 )
-                admins.append(admin)
+                admins.append(admin) # Build list of model objects
         return admins
 
 

@@ -13,6 +13,7 @@ class Teaching:
         # FKs
         self.__teacher_id = teacher_id
         self.__course_id = course_id
+        self.__pers_id = kwargs.get('pers_id', '')
 
         # Attributes for cleaner and meaningful display
         self.__teacher_name = (f"{kwargs.get('first_name', '')} "
@@ -36,3 +37,7 @@ class Teaching:
     @property
     def course_id(self):
         return self.__course_id
+
+    @property
+    def pers_id(self):
+        return self.__pers_id

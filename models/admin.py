@@ -19,3 +19,5 @@ class Administration(Person):
     @property
     def admin_id(self):
         return self.__admin_id
+
+

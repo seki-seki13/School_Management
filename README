@@ -211,9 +211,11 @@ Input validation; Reporting; Dynamic menu printing.
 
 Known Bugs:
 
-- Referential Integrity: Deleting a record with active links
-(e.g., a Teacher with a class) will trigger a MySQL 1451 error unless
+Referential Integrity:
+- Deleting a record with active links (e.g., a Teacher with a class)
+will trigger a MySQL 1451 error unless
 cascading is manually enabled in the Workbench.
+- Teaching assignment using invalid IDs will trigger 1452 error
 
 =======================================================================
 

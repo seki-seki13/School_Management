@@ -23,6 +23,8 @@ class Registration:
                                f"{kwargs.get('teacher_last_name', '')}"
                                ).strip()
         self.__course_name = kwargs.get('course_name', 'Unknown')
+        self.__course_id = kwargs.get('course_id', '')
+        self.__final_grade = kwargs.get('')
 
 
     # Allow safe and secure data retrieval
@@ -45,6 +47,10 @@ class Registration:
     @property
     def course_name(self):
         return self.__course_name
+
+    @property
+    def course_id(self):
+        return self.__course_id
 
     @property
     def reg_date(self):
