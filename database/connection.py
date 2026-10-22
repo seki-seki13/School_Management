@@ -1,47 +1,54 @@
+import os
+from pathlib import Path
+
 import mysql.connector
+from dotenv import load_dotenv
 from mysql.connector import Error
+
+# Load .env from the directory containing this file
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 
 class DatabaseConnection:
     """
-    This class manages the connection to the MySQL database.
-    Utilises Encapsulation to protect sensitive connection details.
+    Manages the connection to the MySQL database.
     """
+
     def __init__(self):
-        # You might need to change these details
-        self.__host = "localhost"
-        self.__user = "Alina_Kopbayeva_CS5_16872239"
-        self.__password = "C0ventryCUC"
+        self.__host = os.getenv("DB_HOST")
+        self.__user = os.getenv("DB_USER")
+        self.__password = os.getenv("DB_PASSWORD")
+        self.__database = os.getenv("DB_NAME")
 
-        # Connects to an existing database created beforehand
-        self.__database = "School_Management_System"
-
-        # Attribute to store the active connection object
         self.connection = None
 
     def connect(self):
-        """
-        Attempts to establish a connection to the database.
-        Includes try-except exception handling with user-friendly
-        error messages.
-        Returns the connection object if successfully connected.
-        """
+        """Establishes a connection to the database."""
         try:
+            # Check configuration before attempting to connect
+            if not all([
+                self.__host,
+                self.__user,
+                self.__password,
+                self.__database
+            ]):
+                raise ValueError("Missing database configuration in .env")
+
             self.connection = mysql.connector.connect(
-                host = self.__host,
-                user = self.__user,
-                password = self.__password,
-                database = self.__database
+                host=self.__host,
+                user=self.__user,
+                password=self.__password,
+                database=self.__database
             )
 
             if self.connection.is_connected():
                 return self.connection
-        except Error as e:
-            print(f'Error connection to MySQL: [{e}]')
+
+        except (Error, ValueError) as e:
+            print(f"Error connecting to MySQL: {e}")
             return None
 
     def close_conn(self):
-        """
-        Closes the connection if it is active.
-        """
+        """Closes the connection if it is active."""
         if self.connection and self.connection.is_connected():
             self.connection.close()

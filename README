@@ -1,244 +1,128 @@
-=======================================================================
+# School Management System
 
-SCHOOL MANAGEMENT SYSTEM - PROJECT README
+A Python and MySQL command-line application for managing school operations, including students, teachers, courses, registrations, attendance, grades, and teaching schedules.
 
-=======================================================================
+The project explores object-oriented programming, relational database design, stored procedures, input validation, role-based access, and database-backed reporting.
 
-1.  INTRODUCTION
+## Features
 
-The School Management System is a comprehensive administrative tool
-designed to manage the student lifecycle, staff assignments, and
-institutional infrastructure. Built with a focus on data integrity and
-security, the application employs an Object-Oriented approach in
-Python, backed by a MySQL relational database normalised to the 3rd
-Normal Form (3NF).
+- **Student management:** Create, view, update, search, and delete student records.
+- **Teacher and course management:** Manage teachers, courses, and teaching assignments.
+- **Registration management:** Maintain student course registrations.
+- **Attendance and grades:** Record attendance and grades and retrieve relevant records.
+- **Scheduling and rooms:** Manage teaching schedules, classrooms, and room types.
+- **Authentication and authorization:** Authenticate users and provide different menu options according to their roles.
+- **Reporting:** Generate reports such as student counts by course, average grades, and attendance summaries.
+- **Input validation:** Validate user input and enforce database constraints.
+- **Sorting and searching:** Implement Merge Sort and Binary Search for operations on loaded records.
+- **Formatted terminal output:** Use `tabulate` to display records in readable tables.
 
-=======================================================================
+## Technology Stack
 
-2. ARTEFACT CODEBASE REQUIREMENT SPECIFICATION COMPLETION
+- **Language:** Python 3.10+
+- **Database:** MySQL 8.0+
+- **Database connectivity:** `mysql-connector-python`
+- **Terminal formatting:** `tabulate`
+- **Configuration:** Environment variables loaded from a local `.env` file
 
-2.1. Required improvement to the codebase. (9/9)
-R1. Added code comments to explain the code.
-R2. Organized the code into different files/classes and folders;
-Made sure my solution is a proper Object Oriented solution including:
-Inheritance, Encapsulation, Abstraction, Single Responsibility.
-R3. Implemented a well-designed database including necessary
-constraints and 3NF tables.
-R4. CRUD functionalities were fully implemented to manage students,
-teachers, courses, teaching and registration records making the data be
-easily manipulated.
-R5. Used Merge Sort and Binary Search algorithms to filter and sort
-loaded data. The program allows searching for specific records by IDs,
-First or Last name, Date, Course.
-R6. Errors and Exceptions were handled using try-except,
-SIGNAL SQLSTATE...SET MESSAGE_TEXT...
-R7. Implemented input validation on multiple layers of the program:
-menus, models, stored procedures and tables level.
-R8. Followed PEP8 Standards.
-R9. Implemented loops providing a continuously running program until
-the user's decision to quit.
+## Architecture
 
-2.2. Optional improvements to the codebase. (6/7)
-O1. Implemented a login feature validating username and password
-stored in Authentication table.
-O2. Added more entities and tables: Authentication, Administration,
-Person, Rooms, Room Types, Teaching, Schedule, Attendance, Grades.
-O3. Added more features and functionalities: generating student
-per course, average grade and attendance summary reports.
-O4. Improved the output by utilising a tabulate library.
-O5. Added general code improvement and refactoring
-(e.g., used match-case instead of some if-else conditions)
-O6. Implemented Authorization: Administration staff access,
-teacher access and student access.
-O7. GUI was not created
+The application is organized into layers to separate user interaction, business logic, data access, and database models.
 
-=======================================================================
+| Component | Responsibility |
+|---|---|
+| `main.py` | Application entry point and login flow |
+| `menus/` | Role-specific menus and user interaction |
+| `models/` | Object-oriented representations of domain entities |
+| `services/` | Application operations and calls to stored procedures |
+| `database/` | MySQL connection management and SQL definitions |
+| `utilities/` | Input validation, sorting, searching, formatting, and shared functionality |
 
-2. PROJECT STRUCTURE
+The database uses a normalized relational schema with primary keys, foreign keys, and other integrity constraints. Stored procedures implement database operations and reporting logic.
 
-/Root_Directory
+## Database Design
 
-- main.py       # System entry point and main login loop
-- README        # Project information
+The database models core school entities and their relationships, including people, students, teachers, courses, registrations, attendance, grades, rooms, and schedules.
 
-- database      # Data layer
--- connection.py            # Encapsulated MySQL connection logic
--- schema.sql               # 3NF table definitions and constraints
--- stored_procedures.sql    # CRUD and analytical logic
----- viewing_sp.sql     # Viewing logic
----- finding_sp.sql     # Finding logic
----- adding_sp.sql      # Adding logic
----- updating_sp.sql    # Updating logic
----- deleting_sp.sql    # Deleting logic
----- utilities_sp.sql   # Additional procedures
+The schema is designed around relational integrity and normalization. Stored procedures are used to centralize database operations, while Python service classes provide an interface between the application and the database.
 
+See the `database/` directory for the schema and stored procedure definitions.
 
-- menus         # Interaction layer
--- shared_menu_options.py  # Reusable menu actions
--- student.py              # Student portal
--- teacher.py              # Teacher portal
--- admin                   # Admin portal
----- admin.py            # Admin portal
----- admin_menu.py       # Admin management menu
----- courses_menu.py     # Courses management menu
----- reporting_menu.py   # Reports menu
----- rooms_menu.py       # Rooms management menu (Rooms, Room Types)
----- student_submenu.py  # Students management menu (Student,
-                                     Registration, Grades, Attendance)
----- teacher_submenu.py  # Teachers management menu
-                                     (Teacher, Teaching, Schedule)
+## Requirements
 
+- Python 3.10 or newer
+- MySQL Server 8.0 or newer
+- Git
 
-- models        # OOP models
--- admin.py             # Admin specific attributes
-                                           (Inheritance from person.py)
--- attendance.py        # Attendance specific attributes
--- authentication.py    # Login credentials and role
--- course.py            # Course specific attributes
--- grades.py            # Grades specific attributes
--- person.py            # Base people class (Inheritance, Abstraction)
--- registration.py      # Students' registration specific attributes
--- room.py              # Rooms specific attributes
--- schedule.py          # Schedule specific attributes
--- student.py           # Student specific attributes
-                                           (Inheritance from person.py)
--- teacher.py           # Teacher specific attributes
-                                           (Inheritance from person.py)
--- teaching.py          # Teacher-to-Course combination
+## Installation
 
+### 1. Clone the repository
 
-- services      # Database-to-Python logic via stored procedures
--- admin_services.py             # Admin management [view, add]
--- attendance_services.py        # Attendance management [view, add]
--- auth_services.py              # Login and authentication logic
-                                                              [update]
--- course_services.py            # Course management [full CRUD]
--- grade_services.py             # Grades management
-                                                   [view, add, update]
--- registration_services.py      # Registration management [full CRUD]
--- room_services.py              # Rooms management [view, add]
--- schedule_services.py          # Schedule management [view, add]
--- student_services.py           # Student management [full CRUD]
--- teacher_services.py           # Teacher management [full CRUD]
--- teaching_services.py          # Teaching management [full CRUD]
+```bash
+git clone <repository-url>
+cd School_Management_System
+```
 
+### 2. Create a virtual environment
 
-- utilities     # Shared utilities
--- decorators.py            # Transaction and sorting decorators
--- displaying.py            # Tabulate-based tables display
--- input_validation.py      # Regex and type input check
--- menu_options.py          # Dynamic menu printing
--- reporting.py             # Reporting via stored procedures
--- searching.py             # Binary Search Algorithm implementation
--- sorting.py               # Merge Sort Algorithm implementation
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-=======================================================================
+### 3. Install dependencies
 
-3. INSTALLATION AND CONFIGURATION
+```bash
+python -m pip install -r requirements.txt
+```
 
-Prerequisites:
-- Python 3.10 or higher.
-- MySQL Server 8.0+.
-- Libraries: pip install mysql-connector-python tabulate
+### 4. Configure MySQL
 
-Database Setup:
-1.  Execute 'database/schema.sql' in MySQL Workbench to create tables.
-2.  Execute 'database/stored_procedures.sql' to initialize logic.
+Create a MySQL user and database with the permissions required by the application.
 
-Configuration:
-- Open 'database/connection.py' and update the __user and __password
-attributes to match your local MySQL server credentials.
+Copy the example configuration file:
 
-=======================================================================
+```bash
+cp .env.example .env
+```
 
-4. OPERATING INSTRUCTIONS & LOGIN DETAILS
+Update `.env` with your local database connection settings. Never commit this file or publish database passwords.
 
-To start the program, run: python main.py
+### 5. Initialize the database
 
-Initial Administrator Credentials:
-- Username: alinaadmin
-- Password: alina123456789
+Execute the SQL files in the documented order to create the schema, constraints, and stored procedures.
 
-Automated Test Credentials (Formula): For easier checking, all other
-accounts generated from the dataset use:
-1.  Username: Person's First Name (e.g., Aisha)
-2.  Password: First Name repeated three times (e.g., AishaAishaAisha)
+If the repository includes sample data, load it only after the schema has been created.
 
-Note: as username is set to be '>5' and password '>12',
-names shorter than 5 characters (e.g., Ivy) require:
-1. Username: Person's First Name with the last letter added until
-the length is 5 (e.g., Ivyyy)
-2. Password: First Name repeated four/five times  (e.g., IvyIvyIvyIvy)
+See `database/README.md` for the exact initialization order and any database-specific setup instructions.
 
-=======================================================================
+### 6. Run the application
 
-5. DATA SOURCE AND CREDITS
+```bash
+python main.py
+```
 
-The mock data for this system was derived from the
-'Fictional People Database (JMD).csv' provided by the university.
+Follow the terminal prompts to sign in and navigate the available menus.
 
-Data Processing Notes:
-- IDs: Automatically incremented by the database
-- First and Last Names: Chosen randomly from the dataset.
-- Date of Birth: Manually corrected for logical consistency.
-- Town: Defaulted to 'Astana' or modified manually.
-- Address: Synchronized with the person's name without change.
-- Phone: Adjusted to the required '+7' format for validation.
-- Email: Utilized from the dataset without change.
-- Other columns: Discarded as they were not relevant to the schema.
+## Algorithms and Design Decisions
 
-=======================================================================
+- **Object-oriented design:** Separate classes and responsibilities for application entities and operations.
+- **Inheritance and abstraction:** Reuse common attributes and behavior across related person entities.
+- **Stored procedures:** Execute database operations and analytical queries through MySQL.
+- **Input validation:** Check user input before processing operations and rely on database constraints for data integrity.
+- **Merge Sort and Binary Search:** Practice implementing and applying fundamental algorithms to loaded records.
 
-6. DEVELOPMENT HISTORY
+## Limitations and Future Improvements
 
-1. Database Schema: Designed 3NF tables and referential integrity.
-2. Stored Procedures: Elicited functionality and created stored
-procedures.
-3. OOP: Created models (OOP classes) and implemented
-inheritance, encapsulation and abstraction.
-4. Decorators: Developed a transaction decorator as a foundation
-for 5th step.
-5. Service layer: Connected stored procedures with models
-via decorators.
-6. Other Utilities: Implemented Binary Search and Merge Sort
-algorithms; Utilised tabulate library for table formatting;
-Input validation; Reporting; Dynamic menu printing.
-7. UI layer: Developed role-based menus portals and menus.
+Potential areas for further development include:
 
-=======================================================================
+- Improving account security with securely hashed passwords and stronger authentication practices.
+- Refining deletion behavior and foreign-key relationships to handle dependent records consistently.
+- Adding automated tests for database operations, validation, and business rules.
+- Introducing structured logging and clearer error handling.
+- Adding a graphical or web-based interface.
+- Improving deployment and database initialization with repeatable setup scripts.
 
-7. KNOWN BUGS
+## Author
 
-Known Bugs:
-
-Referential Integrity:
-- Deleting a record with active links (e.g., a Teacher with a class)
-will trigger a MySQL 1451 error unless
-cascading is manually enabled in the Workbench.
-- Teaching assignment using invalid IDs will trigger 1452 error
-
-=======================================================================
-
-8. IMPORTANT PROJECT NOTES
-
-- Data Utilization: While 50 students and multiple teachers/courses
-were added to the database for scale, only a subset were utilized in
-the Registration and Attendance services to verify functionality.
-
-- Password Security: Robust password format checking (regex) was
-intentionally kept basic to facilitate easier program checking by
-the marker. In a production environment, this would be replaced with
-strict complexity requirements.
-
-- CRUD Implementation: Full CRUD (Create, Read, Update, Delete) was
-prioritized for core assignment entities (Students, Teachers, Courses,
-Teaching, Registration). Secondary tables (like Room Types) implement
-the functional minimum required for the system to operate.
-
-=======================================================================
-
-9. CONTACT INFORMATION
-
-Author: Alina Kopbayeva
-Student ID: 16872239
-Developed for the Software and Databases academic assignment.
+Developed as an independent software project exploring Python application design and relational database management.
